@@ -6,23 +6,23 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 17:37:37 by wchen             #+#    #+#              #
-#    Updated: 2023/02/19 18:17:21 by wchen            ###   ########.fr        #
+#    Updated: 2023/02/20 00:38:52 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= utils.a
+NAME			= libutils.a
 
 # CC CFLAG
-CC				= CC
-CFLAG			= -Wall -Wextra -Werror -MMD -MP
+CC				= cc
+CFLAGS			= -Wall -Wextra -Werror -MMD -MP
 
 # DIRS
 OBJ_DIR			= ./objs
 SRC_DIR			= ./srcs
 
 # SRCS
-UTILS_SRCS		= ft_atoll.c
-SRCS			= $(addprefix $(SRC_DIR)/, $(UTILS_SRCS))
+UTILS_SRC		= ft_atoll.c
+SRCS			= $(addprefix $(SRC_DIR)/, $(UTILS_SRC))
 
 # OBJS
 OBJ				= $(SRCS:%.c=%.o)
@@ -36,15 +36,15 @@ INCLUDES_DIR	= ./includes
 IFLAGS			= $(addprefix -I, $(INCLUDES_DIR))
 
 # RULES
+
+all : $(NAME)
+
 $(NAME) : $(OBJS)
 	ar rcs $(NAME) $(OBJS)
-	#$(CC $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 $(OBJ_DIR)/%.o	:%.c
 	@mkdir -p $$(dirname $@)
-	$(CC) $(CFLAG) $(IFLAG) -c $< -o $@
-
-all : $(NAME)
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean :
 	rm -rf $(OBJ_DIR)

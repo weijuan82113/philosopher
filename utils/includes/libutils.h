@@ -6,12 +6,12 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 23:36:18 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/19 17:35:47 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/20 00:11:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFT_H
-# define LIBFT_H
+#ifndef LIBUTILS_H
+# define LIBUTILS_H
 
 #include <limits.h>
 

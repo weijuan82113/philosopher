@@ -6,11 +6,11 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 17:29:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/19 18:35:56 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/20 00:41:41 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"../includes/libft.h"
+#include "libutils.h"
 
 static long long	overflow(int minus_number)
 {
@@ -62,7 +62,6 @@ long long	ft_atoll(const char *str)
 	}
 	return (num);
 }
-
 // #include <stdlib.h>
 // #include <stdio.h>
 // #include <stdio.h>

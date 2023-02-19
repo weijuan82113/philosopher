@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/10 22:54:15 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/19 22:32:14 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/19 22:54:01 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ typedef struct s_philo
 	long long			index;
 	pthread_t			*p_thread;
 	t_p_info			*p_info;
-	struct timeval 		*last_time_eat;
-	struct timeval		*now;
+	struct timeval 		last_time_eat;
+	struct timeval		now;
 }	t_philo;
 
 void *thread_func(void *arg)
@@ -42,48 +42,30 @@ void *thread_func(void *arg)
 
 	philo = (t_philo*)arg;
 	index = philo->index;
-	printf("index1 is %lld\n", index);fflush(stdout);
-	printf("test segfault1\n");
 	if (index % 2 == 1)
 		usleep(500);
-	printf("test segfault2\n");
 	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[index])) != 0)
 	{
 		printf("error occuring in mutex_lock\n");
 		printf("errno : %d\n", errno);
 		return NULL;
 	}
-	printf("test segfault3\n");
-	if (gettimeofday(philo->now, NULL) != 0)
+	if (gettimeofday(&philo->now, NULL) != 0)
 		printf("error ocurring in get time\n");
-	printf("test segfault4\n");
-	printf("now:%d\n", philo->now->tv_usec);
-	printf("test segfault4-1\n");
-	printf("index:%lld\n", index);
-	printf("test segfault4-2\n");
-	printf("%d %lld get right fork\n", philo->now->tv_usec, index);fflush(stdout);
-	printf("test segfault5\n");
-	printf("philo_num : %lld\n", philo->p_info->philo_num);fflush(stdout);
-	printf("test segfault6\n");
-	printf("index2 is %lld\n", index + 1);fflush(stdout);
-	printf("test segfault7\n");
-	printf("left index : %lld\n", ((index + 1) % (philo->p_info->philo_num)));fflush(stdout);
-	printf("test segfault8\n");
+	printf("%d %lld get right fork\n", philo->now.tv_usec, index);fflush(stdout);
 	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[(index + 1) % philo->p_info->philo_num])) != 0)
 	{
 		printf("error occuring in mutex_lock\n");
 		return NULL;
 	}
-	printf("test segfault9\n");
-	if (gettimeofday(philo->now, NULL) != 0)
+	if (gettimeofday(&philo->now, NULL) != 0)
 		printf("error ocurring in get time\n");
-	printf("test segfault10\n");
-	printf("%d %lld get left fork\n", philo->now->tv_usec, index);
-	printf("%d %lld is eating\n", philo->now->tv_usec, index);
+	printf("%d %lld get left fork\n", philo->now.tv_usec, index);
+	printf("%d %lld is eating\n", philo->now.tv_usec, index);
 	usleep(500);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[index]);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[(index + 1) % philo->p_info->philo_num]);
-	pthread_exit(NULL);
+	thread_func(arg);
 }
 
 t_philo *philo_init(int num, t_p_info *p_info)
@@ -106,7 +88,7 @@ t_philo *philo_init(int num, t_p_info *p_info)
 			printf("error occuring in malloc_pthread\n");
 			return NULL;
 		}
-		if (gettimeofday((philo[i]).last_time_eat, NULL) != 0)
+		if (gettimeofday(&(philo[i]).last_time_eat, NULL) != 0)
 		{
 			printf("error ocurring in get time\n");
 			return NULL;
@@ -163,7 +145,6 @@ int main(int argc, char **argv)
 	i = 0;
 	while (i < p_num)
 	{
-		printf("i : %d\n", i);
 		if (pthread_create((philo[i]).p_thread, NULL, thread_func, (void *)&philo[i]) != 0)
 		{
 			printf("error occuring in pthread_create\n");

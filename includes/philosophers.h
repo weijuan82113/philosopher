@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/20 00:47:12 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/22 23:59:11 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,10 @@ typedef struct s_philo		t_philo;
 struct s_p_info
 {
 	pthread_mutex_t		*fork_mutex;
-	long long			philo_num;
+	long long			p_num;
+	long long			t_die;
+	long long			t_eat;
+	long long			t_sleep;
 };
 
 struct s_philo
@@ -61,13 +64,11 @@ struct s_philo
 /* ************************** */
 
 /* ************************** */
-/*            main            */
-/* ************************** */
-
-/* ************************** */
 /*            srcs            */
 /* ************************** */
-t_p_info	*p_info_init(long long num);
+
+t_p_info	*p_info_init(long long num, char **argv);
 t_philo		*philo_init(int num, t_p_info *p_info);
+void		*printf_return(char *print_str, void *ret);
 
 #endif

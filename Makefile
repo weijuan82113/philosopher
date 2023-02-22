@@ -6,7 +6,7 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/02/20 00:35:19 by wchen            ###   ########.fr        #
+#    Updated: 2023/02/22 22:14:58 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ CFLAGS	= -Wall -Wextra -Werror -MMD -MP
 SRC_DIR	= ./srcs
 SRC		= main.c \
 		  init_philo.c \
+		  print_return.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 

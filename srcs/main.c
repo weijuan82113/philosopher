@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/20 00:45:44 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/23 00:00:08 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void *thread_func(void *arg)
 	if (gettimeofday(&philo->now, NULL) != 0)
 		printf("error ocurring in get time\n");
 	printf("%d %lld get right fork\n", philo->now.tv_usec, index);fflush(stdout);
-	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[(index + 1) % philo->p_info->philo_num])) != 0)
+	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[(index + 1) % philo->p_info->p_num])) != 0)
 	{
 		printf("error occuring in mutex_lock\n");
 		return NULL;
@@ -42,7 +42,7 @@ void *thread_func(void *arg)
 	printf("%d %lld is eating\n", philo->now.tv_usec, index);
 	usleep(500);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[index]);
-	pthread_mutex_unlock(&philo->p_info->fork_mutex[(index + 1) % philo->p_info->philo_num]);
+	pthread_mutex_unlock(&philo->p_info->fork_mutex[(index + 1) % philo->p_info->p_num]);
 	return(arg);
 }
 
@@ -56,11 +56,8 @@ int main(int argc, char **argv)
 	{
 		p_num = ft_atoll(argv[1]);
 		if (p_num == 0)
-		{
-			printf("worng variable\n");
-			return (1);
-		}
-		philo = philo_init(p_num, p_info_init(p_num));
+			printf_return("worng variable\n", (int *)1);
+		philo = philo_init(p_num, p_info_init(p_num, argv));
 	}
 	else
 	{
@@ -71,20 +68,14 @@ int main(int argc, char **argv)
 	while (i < p_num)
 	{
 		if (pthread_create((philo[i]).p_thread, NULL, thread_func, (void *)&philo[i]) != 0)
-		{
-			printf("error occuring in pthread_create\n");
-			return (1);
-		}
+			printf_return("error occuring in pthread_create\n", (int *)1);
 		i ++;
 	}
 	i = 0;
 	while (i < p_num)
 	{
 		if (pthread_join(*((philo[i]).p_thread), NULL) != 0)
-		{
-			printf("error occuring in pthread_detach\n");
-			return (1);
-		}
+			printf_return("error occuring in pthread_detach\n", (int *)1);
 		i ++;
 	}
 	printf("Success!\n");

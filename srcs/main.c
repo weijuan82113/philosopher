@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/23 00:13:44 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/23 00:19:19 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,22 @@ int main(int argc, char **argv)
 
 	p_num = ft_atoll(argv[1]);
 	if (p_num == 0)
-		return (printf_return("worng variable\n", (int *)1));
+		return (*(int *)(printf_return("worng variable\n", (int *)1)));
 	philo = philo_init(p_num, p_info_init(p_num, argv));
 	if (philo == NULL)
-		return NULL;
+		return 1;
 	i = 0;
 	while (i < p_num)
 	{
 		if (pthread_create((philo[i]).p_thread, NULL, thread_func, (void *)&philo[i]) != 0)
-			printf_return("error occuring in pthread_create\n", (int *)1);
+			return (*(int *)(printf_return("error occuring in pthread_create\n", (int *)1)));
 		i ++;
 	}
 	i = 0;
 	while (i < p_num)
 	{
 		if (pthread_join(*((philo[i]).p_thread), NULL) != 0)
-			printf_return("error occuring in pthread_detach\n", (int *)1);
+			return (*(int *)(printf_return("error occuring in pthread_detach\n", (int *)1)));
 		i ++;
 	}
 	printf("Success!\n");

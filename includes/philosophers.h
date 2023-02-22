@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/22 23:59:11 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/23 00:08:05 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ struct s_p_info
 	long long			t_die;
 	long long			t_eat;
 	long long			t_sleep;
+	long long			m_eat;
 };
 
 struct s_philo

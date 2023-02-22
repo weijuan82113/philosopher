@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/23 00:01:46 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/23 00:10:15 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_philo *philo_init(int num, t_p_info *p_info)
 	t_philo	*philo;
 	int		i;
 
+	if (!p_info)
+		return NULL;
 	philo = malloc(sizeof(t_philo) * num);
 	if (!philo)
 		printf_return("error occuring in malloc_t_philo\n", NULL);
@@ -62,6 +64,8 @@ t_p_info *p_info_init(long long num, char **argv)
 			p_info->t_eat = ft_atoll(argv[i]);
 		else if (i == 4 && ft_atoll(argv[i]) != 0)
 			p_info->t_sleep = ft_atoll(argv[i]);
+		else if (i == 5 && ft_atoll(argv[i]) != 0)
+			p_info->m_eat = ft_atoll(argv[i]);
 		else
 			return (printf_return("worng variable\n", NULL));
 		i ++;

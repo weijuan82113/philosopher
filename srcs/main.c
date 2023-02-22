@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/23 00:00:08 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/23 00:13:44 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,18 +52,12 @@ int main(int argc, char **argv)
 	int			i;
 	long long 	p_num;
 
-	if (argc > 1)
-	{
-		p_num = ft_atoll(argv[1]);
-		if (p_num == 0)
-			printf_return("worng variable\n", (int *)1);
-		philo = philo_init(p_num, p_info_init(p_num, argv));
-	}
-	else
-	{
-		printf("worng variable\n");
-		return (1);
-	}
+	p_num = ft_atoll(argv[1]);
+	if (p_num == 0)
+		return (printf_return("worng variable\n", (int *)1));
+	philo = philo_init(p_num, p_info_init(p_num, argv));
+	if (philo == NULL)
+		return NULL;
 	i = 0;
 	while (i < p_num)
 	{

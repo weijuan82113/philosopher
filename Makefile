@@ -6,7 +6,7 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/02/22 22:14:58 by wchen            ###   ########.fr        #
+#    Updated: 2023/02/28 01:22:10 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,8 @@ SRC_DIR	= ./srcs
 SRC		= main.c \
 		  init_philo.c \
 		  print_return.c \
+		  time.c \
+		  judge_die.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 

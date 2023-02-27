@@ -1,25 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_return.c                                     :+:      :+:    :+:   */
+/*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/22 22:02:54 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/23 00:24:54 by wchen            ###   ########.fr       */
+/*   Created: 2023/02/27 22:57:33 by wchen             #+#    #+#             */
+/*   Updated: 2023/02/28 01:11:10 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void *printf_return(char *print_str, void *ret)
+long long get_time(void)
 {
-	printf("%s", print_str);
-	return (ret);
+	struct timeval	time;
+
+	if (gettimeofday(&time, NULL) != 0)
+		printf_return("error ocurring in gettimeofday\n", 0);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int printf_return_int(char *print_str, int ret)
+bool set_time(t_philo *philo)
 {
-	printf("%s", print_str);
-	return (ret);
+	philo->now_time = get_time();
+	if (philo->now_time == 0)
+		return false;
+	philo->starving_time = philo->now_time - philo->last_eat_time;
+	return true;
 }

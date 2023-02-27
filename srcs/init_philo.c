@@ -6,16 +6,16 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/23 00:10:15 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/27 22:31:04 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-t_philo *philo_init(int num, t_p_info *p_info)
+t_philo *philo_init(long long num, t_p_info *p_info)
 {
-	t_philo	*philo;
-	int		i;
+	t_philo		*philo;
+	long long	i;
 
 	if (!p_info)
 		return NULL;
@@ -28,10 +28,12 @@ t_philo *philo_init(int num, t_p_info *p_info)
 		(philo[i]).p_thread = malloc(sizeof(pthread_t));
 		if (!(philo[i]).p_thread)
 			return (printf_return("error occuring in malloc_pthread\n", NULL));
-		if (gettimeofday(&(philo[i]).last_time_eat, NULL) != 0)
-			printf_return("error ocurring in get time\n", NULL);
+		(philo[i]).philo_mutex = malloc(sizeof(pthread_mutex_t));
+		if (!(philo[i]).philo_mutex)
+			return (printf_return("error occuring in mutex init\n", NULL));
 		philo[i].index = i;
 		philo[i].p_info = p_info;
+		philo[i].state = e_init;
 		i ++;
 	}
 	return (philo);
@@ -44,6 +46,8 @@ t_p_info *p_info_init(long long num, char **argv)
 	pthread_mutex_t	*fork;
 
 	p_info = malloc(sizeof(t_p_info));
+	if (!p_info)
+		return NULL;
 	p_info->p_num = num;
 	fork = malloc(sizeof(pthread_mutex_t) * num);
 	if (!fork)
@@ -55,6 +59,8 @@ t_p_info *p_info_init(long long num, char **argv)
 		i ++;
 	}
 	p_info->fork_mutex = fork;
+	p_info->die = false;
+	p_info->ready = false;
 	i = 2;
 	while (argv[i] != NULL)
 	{
@@ -67,10 +73,10 @@ t_p_info *p_info_init(long long num, char **argv)
 		else if (i == 5 && ft_atoll(argv[i]) != 0)
 			p_info->m_eat = ft_atoll(argv[i]);
 		else
-			return (printf_return("worng variable\n", NULL));
+			return (printf_return("wrong variable\n", NULL));
 		i ++;
 	}
-	if (argv[i] != NULL)
-		return (printf_return("worng variable\n", NULL));
+	if (argv[i] != NULL || i < 5)
+		return (printf_return("wrong variable\n", NULL));
 	return (p_info);
 }

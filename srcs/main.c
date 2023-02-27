@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/23 00:19:19 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/28 01:21:59 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,48 @@ void *thread_func(void *arg)
 		printf("errno : %d\n", errno);
 		return NULL;
 	}
-	if (gettimeofday(&philo->now, NULL) != 0)
-		printf("error ocurring in get time\n");
-	printf("%d %lld get right fork\n", philo->now.tv_usec, index);fflush(stdout);
+	printf("%lld %lld get right fork\n", philo->now_time, index);fflush(stdout);
 	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[(index + 1) % philo->p_info->p_num])) != 0)
 	{
 		printf("error occuring in mutex_lock\n");
 		return NULL;
 	}
-	if (gettimeofday(&philo->now, NULL) != 0)
-		printf("error ocurring in get time\n");
-	printf("%d %lld get left fork\n", philo->now.tv_usec, index);
-	printf("%d %lld is eating\n", philo->now.tv_usec, index);
+	printf("%lld %lld get left fork\n", philo->now_time, index);
+	printf("%lld %lld is eating\n", philo->now_time, index);
 	usleep(500);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[index]);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[(index + 1) % philo->p_info->p_num]);
 	return(arg);
 }
+
+void *thread_monitor_func(void *arg)
+{
+	t_philo *philo;
+
+	philo = arg;
+	pthread_mutex_lock(philo->philo_mutex);
+	if (philo->index == philo->p_info->p_num)
+	{
+		philo->p_info->start_time = get_time();
+		if (philo->p_info->start_time == 0)
+			return (printf_return("error occuring in gettimeofday\n", NULL));
+		philo->p_info->ready = true;
+	}
+	while (true)
+	{
+		if (philo->p_info->ready == true)
+			break;
+	}
+	pthread_mutex_unlock(philo->philo_mutex);
+	while (true)
+	{
+		if (set_time(philo) == false)
+			return (printf_return("error occuring in set_time\n", NULL));
+		if (judge_die(philo) == true)
+			return NULL;
+	}
+}
+
 
 int main(int argc, char **argv)
 {
@@ -52,24 +77,28 @@ int main(int argc, char **argv)
 	int			i;
 	long long 	p_num;
 
+	if (argc < 2)
+		return (printf_return_int("wrong variable\n", 1));
 	p_num = ft_atoll(argv[1]);
 	if (p_num == 0)
-		return (*(int *)(printf_return("worng variable\n", (int *)1)));
+		return (printf_return_int("wrong variable\n", 1));
 	philo = philo_init(p_num, p_info_init(p_num, argv));
 	if (philo == NULL)
 		return 1;
 	i = 0;
 	while (i < p_num)
 	{
+		if (pthread_create((philo[i]).p_thread, NULL, thread_monitor_func, (void *)&philo[i]) != 0)
+			return ((printf_return_int("error occuring in pthread_create\n", 1)));
 		if (pthread_create((philo[i]).p_thread, NULL, thread_func, (void *)&philo[i]) != 0)
-			return (*(int *)(printf_return("error occuring in pthread_create\n", (int *)1)));
+			return ((printf_return_int("error occuring in pthread_create\n", 1)));
 		i ++;
 	}
 	i = 0;
 	while (i < p_num)
 	{
 		if (pthread_join(*((philo[i]).p_thread), NULL) != 0)
-			return (*(int *)(printf_return("error occuring in pthread_detach\n", (int *)1)));
+			return (printf_return_int("error occuring in pthread_detach\n", 1));
 		i ++;
 	}
 	printf("Success!\n");

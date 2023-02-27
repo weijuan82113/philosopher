@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/27 22:31:04 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/28 01:55:47 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ t_philo *philo_init(long long num, t_p_info *p_info)
 		(philo[i]).philo_mutex = malloc(sizeof(pthread_mutex_t));
 		if (!(philo[i]).philo_mutex)
 			return (printf_return("error occuring in mutex init\n", NULL));
+		pthread_mutex_init((philo[i]).philo_mutex, NULL);
 		philo[i].index = i;
 		philo[i].p_info = p_info;
 		philo[i].state = e_init;

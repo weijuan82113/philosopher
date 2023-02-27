@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/28 01:21:59 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/28 01:56:32 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ void *thread_func(void *arg)
 	index = philo->index;
 	if (index % 2 == 1)
 		usleep(500);
+	printf("3 index:%lld\n", philo->index);
+	pthread_mutex_lock(philo->philo_mutex);
+	printf("4 index:%lld\n", philo->index);
 	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[index])) != 0)
 	{
 		printf("error occuring in mutex_lock\n");
@@ -39,6 +42,7 @@ void *thread_func(void *arg)
 	usleep(500);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[index]);
 	pthread_mutex_unlock(&philo->p_info->fork_mutex[(index + 1) % philo->p_info->p_num]);
+	pthread_mutex_unlock(philo->philo_mutex);
 	return(arg);
 }
 
@@ -47,11 +51,13 @@ void *thread_monitor_func(void *arg)
 	t_philo *philo;
 
 	philo = arg;
+	printf("1 index:%lld\n", philo->index);
 	pthread_mutex_lock(philo->philo_mutex);
-	if (philo->index == philo->p_info->p_num)
+	printf("2 index:%lld\n", philo->index);
+	if (philo->index + 1 == philo->p_info->p_num)
 	{
-		philo->p_info->start_time = get_time();
-		if (philo->p_info->start_time == 0)
+		philo->p_info->start_time_stamp = get_time();
+		if (philo->p_info->start_time_stamp == 0)
 			return (printf_return("error occuring in gettimeofday\n", NULL));
 		philo->p_info->ready = true;
 	}

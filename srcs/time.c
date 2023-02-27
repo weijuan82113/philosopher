@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:57:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/28 01:11:10 by wchen            ###   ########.fr       */
+/*   Updated: 2023/02/28 01:55:51 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ long long get_time(void)
 
 bool set_time(t_philo *philo)
 {
-	philo->now_time = get_time();
-	if (philo->now_time == 0)
+	long long now_time_stamp;
+
+	now_time_stamp = get_time();
+	if (now_time_stamp == 0)
 		return false;
+	philo->now_time = now_time_stamp - philo->p_info->start_time_stamp;
 	philo->starving_time = philo->now_time - philo->last_eat_time;
 	return true;
 }

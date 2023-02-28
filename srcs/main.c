@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/28 01:56:32 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/01 01:40:58 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void *thread_func(void *arg)
 		usleep(500);
 	printf("3 index:%lld\n", philo->index);
 	pthread_mutex_lock(philo->philo_mutex);
+	if (is_die(philo) == true)
+		return (NULL);
+	pthread_mutex_unlock(philo->philo_mutex);
+	judge_state();
+	print_state();
 	printf("4 index:%lld\n", philo->index);
 	if (pthread_mutex_lock(&((philo->p_info->fork_mutex)[index])) != 0)
 	{
@@ -76,6 +81,10 @@ void *thread_monitor_func(void *arg)
 	}
 }
 
+__attribute__((destructor))
+static void destructor() {
+    system("leaks -q philo");
+}
 
 int main(int argc, char **argv)
 {
@@ -105,8 +114,11 @@ int main(int argc, char **argv)
 	{
 		if (pthread_join(*((philo[i]).p_thread), NULL) != 0)
 			return (printf_return_int("error occuring in pthread_detach\n", 1));
+		if (pthread_join(*((philo[i]).p_thread), NULL) != 0)
+			return (printf_return_int("error occuring in pthread_detach\n", 1));
 		i ++;
 	}
+	free_all(philo);
 	printf("Success!\n");
 	return (0);
 }

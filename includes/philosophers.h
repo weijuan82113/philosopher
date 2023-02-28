@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/02/28 01:55:45 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/01 01:38:46 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,7 @@ int			printf_return_int(char *print_str, int ret);
 long long	get_time(void);
 bool		set_time(t_philo *philo);
 bool		judge_die(t_philo *philo);
+void		free_all(t_philo *philo);
+bool 		is_die(t_philo *philo);
+
 #endif

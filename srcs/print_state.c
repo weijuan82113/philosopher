@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   judge_die.c                                        :+:      :+:    :+:   */
+/*   print_state.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/03 00:29:44 by wchen            ###   ########.fr       */
+/*   Created: 2023/03/01 23:32:25 by wchen             #+#    #+#             */
+/*   Updated: 2023/03/02 00:13:20 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-
-bool is_someone_die(t_philo *philo)
+void print_state(t_state_type state, long long index, long long now)
 {
-	if (philo->p_info->die == true)
-		return (true);
-	return (false);
-}
-
-void set_die(t_philo *philo)
-{
-	philo->p_info->die = true;
-	philo->state = e_die;
-}
-
-
-bool judge_die(t_philo *philo)
-{
-	if(philo->starving_time > philo->p_info->t_die)
-		return true;
-	return false;
+	if (state == e_eat)
+		printf ("%lld %lld %s\n", now, index, EAT);
+	else if (state == e_sleep)
+		printf ("%lld %lld %s\n", now, index, SLEEP);
+	else if (state == e_think)
+		printf ("%lld %lld %s\n", now, index, THINK);
+	else if (state == e_die)
+		printf ("%lld %lld %s\n", now, index, DIE);
+	else
+		printf ("%lld %lld %s\n", now, index, FORK);
 }

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/01 01:38:46 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/03 00:28:51 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@
 /* ************************** */
 /*           macro            */
 /* ************************** */
+# define EAT	"is eating"
+# define SLEEP	"is sleeping"
+# define THINK	"is thinking"
+# define DIE	"died"
+# define FORK	"has taken a fork"
+
 
 /* ************************** */
 /*          typedef           */
@@ -43,7 +49,8 @@ enum	e_state_type
 	e_think,
 	e_eat,
 	e_sleep,
-	e_die
+	e_die,
+	e_fork,
 };
 
 /* ************************** */
@@ -82,14 +89,17 @@ struct	s_philo
 /*            srcs            */
 /* ************************** */
 
-t_p_info	*p_info_init(long long num, char **argv);
-t_philo		*philo_init(long long num, t_p_info *p_info);
-void		*printf_return(char *print_str, void *ret);
-int			printf_return_int(char *print_str, int ret);
-long long	get_time(void);
-bool		set_time(t_philo *philo);
-bool		judge_die(t_philo *philo);
-void		free_all(t_philo *philo);
-bool 		is_die(t_philo *philo);
-
+t_p_info		*p_info_init(long long num, char **argv);
+t_philo			*philo_init(long long num, t_p_info *p_info);
+void			*printf_return(char *print_str, void *ret);
+int				printf_return_int(char *print_str, int ret);
+long long		get_time(void);
+bool			set_time(t_philo *philo);
+bool			judge_die(t_philo *philo);
+void			free_all(t_philo *philo);
+bool 			is_someone_die(t_philo *philo);
+t_state_type	judge_state(t_philo *philo);
+void			print_state(t_state_type state, long long index, long long now);
+void			do_action(t_state_type state, long long index, t_p_info *p_info);
+void			set_die(t_philo *philo);
 #endif

@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   judge_die.c                                        :+:      :+:    :+:   */
+/*   do_action.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/03 00:29:44 by wchen            ###   ########.fr       */
+/*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
+/*   Updated: 2023/03/02 00:15:31 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-
-bool is_someone_die(t_philo *philo)
+void eat(long long index, t_p_info *p_info)
 {
-	if (philo->p_info->die == true)
-		return (true);
-	return (false);
+	usleep(p_info->t_eat * 1000);
+	pthread_mutex_unlock(&p_info->fork_mutex[index]);
+	pthread_mutex_unlock(&p_info->fork_mutex[(index + 1) % p_info->p_num]);
 }
 
-void set_die(t_philo *philo)
+void do_action(t_state_type state, long long index, t_p_info *p_info)
 {
-	philo->p_info->die = true;
-	philo->state = e_die;
-}
-
-
-bool judge_die(t_philo *philo)
-{
-	if(philo->starving_time > philo->p_info->t_die)
-		return true;
-	return false;
+	if (state == e_eat)
+		eat(index, p_info);
+	if (state == e_sleep)
+		usleep(p_info->t_sleep * 1000);
 }

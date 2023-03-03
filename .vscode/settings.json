@@ -6,6 +6,8 @@
 		"complex": "c",
 		"__locale": "c",
 		"chrono": "c",
-		"variant": "c"
+		"variant": "c",
+		"locale": "c",
+		"string": "c"
 	}
 }

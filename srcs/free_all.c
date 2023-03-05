@@ -6,53 +6,53 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 00:08:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/04 13:29:01 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/06 00:13:30 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-void	*free_p_info(t_p_info *p_info)
+static void	*free_p_info(t_p_info *p_info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < p_info->p_num)
 	{
 		pthread_mutex_destroy(&(p_info->fork_mutex[i]));
-		i ++;
+		i++;
 	}
 	pthread_mutex_destroy(p_info->monitor_mutex);
 	free(p_info->fork_mutex);
 	free(p_info->monitor_mutex);
 	free(p_info->t_thread);
-	free (p_info);
+	free(p_info);
 	return (NULL);
 }
 
-void	free_philo_mutex(t_philo *philo, int num)
+static void	free_philo_mutex(t_philo *philo, int num)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < num)
 	{
 		pthread_mutex_destroy(philo[i].philo_mutex);
 		free(philo[i].philo_mutex);
-		i ++;
+		i++;
 	}
 }
 
-void	free_philo_thread(t_philo *philo, int num)
+static void	free_philo_thread(t_philo *philo, int num)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < num)
 	{
 		free(philo[i].p_thread);
 		free(philo[i].m_thread);
-		i ++;
+		i++;
 	}
 }
 

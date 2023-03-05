@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/04 19:53:23 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/04 20:07:02 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/06 00:12:28 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	set_must_eat(t_philo *philo)
 bool	judge_must_eat(t_philo *philo)
 {
 	if (philo->p_info->m_eat > 0)
-		return true;
-	return false;
+		return (true);
+	return (false);
 }

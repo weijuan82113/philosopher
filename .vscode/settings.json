@@ -8,6 +8,8 @@
 		"chrono": "c",
 		"variant": "c",
 		"locale": "c",
-		"string": "c"
+		"string": "c",
+		"time.h": "c",
+		"libutils.h": "c"
 	}
 }

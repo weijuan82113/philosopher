@@ -6,7 +6,7 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/03/05 18:47:16 by wchen            ###   ########.fr        #
+#    Updated: 2023/03/06 00:01:55 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,9 @@ SRC		= main.c \
 		  do_action.c \
 		  set_must_eat.c \
 		  waiter.c \
+		  thread_func.c \
+		  init_thread_func.c \
+		  init_p_info.c \
 
 SRCS = $(addprefix $(SRC_DIR)/, $(SRC))
 

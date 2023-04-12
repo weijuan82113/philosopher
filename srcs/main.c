@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/06 00:26:35 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/06 22:37:52 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	if (argc < 2)
 		return (printf_return_int("wrong variable\n", 1));
 	p_num = ft_atoll(argv[1]);
-	if (p_num == 0)
+	if (p_num <= 0)
 		return (printf_return_int("wrong variable\n", 1));
 	philo = philo_init(p_num, p_info_init(p_num, argv));
 	if (philo == NULL)

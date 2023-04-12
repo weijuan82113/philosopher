@@ -6,11 +6,30 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:59:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/06 00:20:07 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/07 01:52:54 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+static bool set_ready_mutex(t_p_info *p_info)
+{
+	long long i;
+
+	pthread_mutex_t	*ready_mutex;
+	ready_mutex = malloc(sizeof(pthread_mutex_t) * p_info->p_num);
+	if (!ready_mutex)
+		return (false);
+	i = 0;
+	while (i < p_info->p_num)
+	{
+		pthread_mutex_init(&ready_mutex[i], NULL);
+		pthread_mutex_lock(&ready_mutex[i]);
+		i ++;
+	}
+	p_info->ready_mutex = ready_mutex;
+	return true;
+}
 
 static bool	init_mutex(long long num, t_p_info *p_info)
 {
@@ -33,6 +52,8 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 		return (false);
 	pthread_mutex_init(monitor, NULL);
 	p_info->monitor_mutex = monitor;
+	if (set_ready_mutex(p_info) == false)
+		return (false);
 	return (true);
 }
 
@@ -63,14 +84,12 @@ static bool	init_input_var(t_p_info *p_info, char **argv)
 static bool	init_info_var(t_p_info *p_info, char **argv)
 {
 	pthread_t	*t_thread;
-	int			i;
 
 	t_thread = malloc(sizeof(pthread_t));
 	if (!t_thread)
 		return (false);
 	p_info->t_thread = t_thread;
 	p_info->die = false;
-	p_info->ready = false;
 	p_info->is_must_eat = false;
 	if (init_input_var(p_info, argv) == false)
 		return (false);

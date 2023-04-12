@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 18:29:48 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/06 00:21:07 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/07 01:52:45 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ bool	waiter_judge(t_philo *philo)
 		return (true);
 	if (is_starving_time_longest(philo, philo->index,
 			philo->p_info->waiter) == true)
+	{
+		//printf("index :%lld true\n", philo->index);
 		return (true);
+	}
+	//printf("index :%lld false\n", philo->index);
 	return (false);
 }

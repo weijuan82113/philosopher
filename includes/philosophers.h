@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/06 00:24:25 by wchen            ###   ########.fr       */
+/*   Updated: 2023/03/06 23:26:54 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ struct						s_p_info
 {
 	pthread_mutex_t			*fork_mutex;
 	pthread_mutex_t			*monitor_mutex;
+	pthread_mutex_t			*ready_mutex;
 	pthread_t				*t_thread;
 	long long				p_num;
 	long long				t_die;
@@ -73,7 +74,6 @@ struct						s_p_info
 	long long				t_sleep;
 	long long				m_eat;
 	bool					die;
-	bool					ready;
 	bool					is_must_eat;
 	long long				now_time;
 	long long				start_time_stamp;

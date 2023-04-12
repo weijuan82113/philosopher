@@ -6,7 +6,7 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/03/06 00:01:55 by wchen            ###   ########.fr        #
+#    Updated: 2023/03/06 22:30:36 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,10 +63,10 @@ $(NAME) : $(OBJS)
 
 $(OBJ_DIR)/%.o :%.c
 	@mkdir -p $$(dirname $@)
-	$(CC) $(CFLAG) $(IFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean 	:
-	@make clean -C $(LIBUTILS_DIR)
+	@make fclean -C $(LIBUTILS_DIR)
 	rm -rf $(OBJ_DIR)
 
 fclean	: clean

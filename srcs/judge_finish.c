@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/07 00:12:54 by wchen            ###   ########.fr       */
+/*   Updated: 2023/04/17 22:31:07 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 bool	is_someone_die(t_philo *philo)
 {
+	pthread_mutex_lock(philo->c_mutex->state_mutex);
 	if (philo->p_info->die == true)
 		return (true);
+	pthread_mutex_unlock(philo->c_mutex->state_mutex);
 	return (false);
 }
 
@@ -39,14 +41,18 @@ bool	is_everyone_eat(t_philo *philo)
 
 void	set_die(t_philo *philo)
 {
+	pthread_mutex_lock(philo->c_mutex->state_mutex);
 	philo->p_info->die = true;
 	philo->state = e_die;
+	pthread_mutex_unlock(philo->c_mutex->state_mutex);
 }
 
 bool	judge_die(t_philo *philo)
 {
+	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
 	if (philo->starving_time >= philo->p_info->t_die)
 		return (true);
+	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
 	return (false);
 }
 

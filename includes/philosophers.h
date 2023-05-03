@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/06 23:26:54 by wchen            ###   ########.fr       */
+/*   Updated: 2023/04/17 23:23:47 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@
 /*          typedef           */
 /* ************************** */
 /* struct */
-typedef struct s_p_info		t_p_info;
-typedef struct s_philo		t_philo;
+typedef struct s_p_info			t_p_info;
+typedef struct s_philo			t_philo;
+typedef struct s_common_mutex	t_common_mutex;
 
 /* enum */
 typedef enum e_state_type	t_state_type;
@@ -76,8 +77,10 @@ struct						s_p_info
 	bool					die;
 	bool					is_must_eat;
 	long long				now_time;
+	pthread_mutex_t			*now_time_mutex;
 	long long				start_time_stamp;
 	t_philo					*waiter;
+	pthread_mutex_t			*waiter_mutex;
 };
 
 struct						s_philo
@@ -92,6 +95,14 @@ struct						s_philo
 	long long				starving_time;
 	long long				eat_count;
 	bool					philo_must_eat;
+	t_common_mutex			*c_mutex;
+};
+
+struct						s_common_mutex
+{
+	pthread_mutex_t			*last_eat_mutex;
+	pthread_mutex_t			*starving_time_mutex;
+	pthread_mutex_t			*state_mutex;
 };
 
 /* ************************** */

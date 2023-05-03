@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:59:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/07 01:52:54 by wchen            ###   ########.fr       */
+/*   Updated: 2023/04/17 21:47:35 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 {
 	pthread_mutex_t	*fork;
 	pthread_mutex_t	*monitor;
+	pthread_mutex_t	*now_time;
+	pthread_mutex_t	*waiter;
 	int				i;
 
 	fork = malloc(sizeof(pthread_mutex_t) * num);
@@ -52,6 +54,16 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 		return (false);
 	pthread_mutex_init(monitor, NULL);
 	p_info->monitor_mutex = monitor;
+	now_time = malloc(sizeof(pthread_mutex_t));
+	if (!now_time)
+		return (false);
+	pthread_mutex_init(now_time, NULL);
+	p_info->now_time_mutex = now_time;
+	waiter = malloc(sizeof(pthread_mutex_t));
+	if (!waiter)
+		return (false);
+	pthread_mutex_init(waiter, NULL);
+	p_info->waiter_mutex = waiter;
 	if (set_ready_mutex(p_info) == false)
 		return (false);
 	return (true);
@@ -59,25 +71,27 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 
 static bool	init_input_var(t_p_info *p_info, char **argv)
 {
-	int	i;
+	int			i;
+	long long	t;
 
 	i = 2;
 	while (argv[i] != NULL)
 	{
-		if (i == 2 && ft_atoll(argv[i]) != 0)
-			p_info->t_die = ft_atoll(argv[i]);
-		else if (i == 3 && ft_atoll(argv[i]) != 0)
-			p_info->t_eat = ft_atoll(argv[i]);
-		else if (i == 4 && ft_atoll(argv[i]) != 0)
-			p_info->t_sleep = ft_atoll(argv[i]);
-		else if (i == 5 && ft_atoll(argv[i]) != 0)
-			p_info->m_eat = ft_atoll(argv[i]);
+		t = ft_atoll(argv[i]);
+		if (i == 2 && t > 0)
+			p_info->t_die = t;
+		else if (i == 3 && t > 0)
+			p_info->t_eat = t;
+		else if (i == 4 && t > 0)
+			p_info->t_sleep = t;
+		else if (i == 5 && t > 0)
+			p_info->m_eat = t;
 		else
 			return (printf_return_int("wrong variable\n", false));
 		i++;
 	}
-	if (argv[i] != NULL || i < 5)
-		return (printf_return_int("wrong variable\n", false));
+	// if (argv[i] != NULL || i > 5)
+	// 	return (printf_return_int("wrong variable\n", false));
 	return (true);
 }
 

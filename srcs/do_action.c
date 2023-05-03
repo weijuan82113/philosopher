@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/03/07 01:53:19 by wchen            ###   ########.fr       */
+/*   Updated: 2023/04/16 13:53:56 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	do_wait(t_state_type state, long long start_time,
 	}
 }
 
-static void	eat(long long index, t_philo *philo)
+static void	do_eat(long long index, t_philo *philo)
 {
 	t_p_info	*p_info;
 
@@ -49,7 +49,7 @@ static void	eat(long long index, t_philo *philo)
 void	do_action(t_state_type state, long long index, t_philo *philo)
 {
 	if (state == e_eat)
-		eat(index, philo);
+		do_eat(index, philo);
 	if (state == e_sleep)
 		do_wait(philo->state, get_time(), philo->p_info->t_sleep);
 }

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 00:08:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/04/17 21:43:22 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/04 19:46:33 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ static void	*free_p_info(t_p_info *p_info)
 		i++;
 	}
 	pthread_mutex_destroy(p_info->monitor_mutex);
+	pthread_mutex_destroy(p_info->die_mutex);
 	pthread_mutex_destroy(p_info->now_time_mutex);
 	pthread_mutex_destroy(p_info->waiter_mutex);
 	free(p_info->fork_mutex);
 	free(p_info->ready_mutex);
 	free(p_info->monitor_mutex);
+	free(p_info->die_mutex);
 	free(p_info->now_time_mutex);
 	free(p_info->waiter_mutex);
 	free(p_info->t_thread);

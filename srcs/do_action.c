@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/04/16 13:53:56 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/09 22:47:13 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	is_wait_time(t_state_type state, long long start_time,
 {
 	if (state == e_sleep)
 		return (get_time() - start_time >= wait_time);
-	return (get_time() - start_time >= wait_time);
+	return (get_time() - start_time > wait_time);
 }
 
 static void	do_wait(t_state_type state, long long start_time,
@@ -25,7 +25,7 @@ static void	do_wait(t_state_type state, long long start_time,
 {
 	while (true)
 	{
-		usleep(400);
+		usleep(200);
 		if (is_wait_time(state, start_time, wait_time))
 			break ;
 	}

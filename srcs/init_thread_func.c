@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:17:13 by wchen             #+#    #+#             */
-/*   Updated: 2023/04/16 15:09:33 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/06 13:18:16 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,15 @@ bool	join_thread(long long p_num, t_philo *philo)
 	{
 		if (pthread_join(*((philo[i]).m_thread), NULL) != 0)
 			return (false);
+		printf("test1\n");
 		if (pthread_join(*((philo[i]).p_thread), NULL) != 0)
 			return (false);
+		printf("test2\n");
 		i++;
 	}
+	printf("test3\n");
 	if (pthread_join(*philo->p_info->t_thread, NULL) != 0)
 		return (false);
+	printf("test4\n");
 	return (true);
 }

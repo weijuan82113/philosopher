@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/04/17 23:23:47 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/09 22:59:53 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ struct						s_p_info
 	long long				t_sleep;
 	long long				m_eat;
 	bool					die;
+	pthread_mutex_t			*die_mutex;
 	bool					is_must_eat;
 	long long				now_time;
 	pthread_mutex_t			*now_time_mutex;
@@ -82,6 +83,33 @@ struct						s_p_info
 	t_philo					*waiter;
 	pthread_mutex_t			*waiter_mutex;
 };
+
+// struct t_shere_mem{
+// 	pthread_mutex_t	*mutex;
+// 	void			*content;
+// };
+
+struct t_shere_mem{
+	pthread_mutex_t	*mutex;
+	bool			die;
+};
+
+
+//
+	pthread_mutex_t			*ready_mutex;
+
+
+	pthread_mutex_t			*fork_mutex;
+	pthread_mutex_t			*monitor_mutex;
+	pthread_mutex_t			*waiter_mutex;
+	pthread_mutex_t			*now_time_mutex;
+	pthread_mutex_t			*die_mutex;
+
+	pthread_mutex_t			*philo_mutex;
+	pthread_mutex_t			*last_eat_mutex;
+	pthread_mutex_t			*starving_time_mutex;
+	pthread_mutex_t			*state_mutex;
+
 
 struct						s_philo
 {

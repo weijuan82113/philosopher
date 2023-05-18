@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:57:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/04 22:21:26 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/18 22:48:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,7 @@ void	set_last_eat_time(t_philo *philo)
 {
 	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
-	//printf("test 8\n");fflush(stdout);
 	philo->last_eat_time = philo->p_info->now_time;
-	//printf("last_eat_time : %lld\n", philo->last_eat_time);
-	//printf("starving_time : %lld\n", philo->starving_time);
-	//printf("test 9\n");fflush(stdout);
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
 }
@@ -39,9 +35,7 @@ void	set_starving_time(t_philo *philo)
 	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
 	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
-	//printf("test 10\n");fflush(stdout);
 	philo->starving_time = philo->p_info->now_time - philo->last_eat_time;
-	//printf("test 11\n");fflush(stdout);
 	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);

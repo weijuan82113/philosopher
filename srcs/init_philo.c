@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/04 19:55:32 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/18 22:56:51 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ static bool common_mutex_init(t_common_mutex *c_mutex)
 	c_mutex->state_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!c_mutex->state_mutex)
 		return (false);
+	c_mutex->eat_flag_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!c_mutex->eat_flag_mutex)
+		return (false);
 	return (true);
 }
 
@@ -37,6 +40,7 @@ static void	init_philo_state(long long i, t_philo *philo, t_p_info *p_info)
 	pthread_mutex_init((philo[i]).c_mutex->last_eat_mutex, NULL);
 	pthread_mutex_init((philo[i]).c_mutex->starving_time_mutex, NULL);
 	pthread_mutex_init((philo[i]).c_mutex->state_mutex, NULL);
+	pthread_mutex_init((philo[i]).c_mutex->eat_flag_mutex, NULL);
 }
 
 static bool	init_philo_var(t_philo *philo, t_p_info *p_info, long long num)
@@ -58,6 +62,7 @@ static bool	init_philo_var(t_philo *philo, t_p_info *p_info, long long num)
 		if (!(philo[i]).philo_mutex)
 			return (printf_return_int("error occuring in mutex init\n", false));
 		(philo[i]).c_mutex = malloc(sizeof(t_common_mutex));
+		philo[i].eat_flag = 0;
 		if (!(philo[i].c_mutex) || !common_mutex_init(philo[i].c_mutex))
 			return (printf_return_int("error occuring in mutex init\n", false));
 		init_philo_state(i, philo, p_info);

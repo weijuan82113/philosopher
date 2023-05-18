@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:59:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/04 19:45:55 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/18 22:45:57 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,6 @@ static bool	init_input_var(t_p_info *p_info, char **argv)
 			return (printf_return_int("wrong variable\n", false));
 		i++;
 	}
-	// if (argv[i] != NULL || i > 5)
-	// 	return (printf_return_int("wrong variable\n", false));
 	return (true);
 }
 

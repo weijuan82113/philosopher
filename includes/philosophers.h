@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/09 22:59:53 by wchen            ###   ########.fr       */
+/*   Updated: 2023/05/18 22:54:08 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,27 +89,17 @@ struct						s_p_info
 // 	void			*content;
 // };
 
-struct t_shere_mem{
-	pthread_mutex_t	*mutex;
-	bool			die;
-};
-
-
 //
 	pthread_mutex_t			*ready_mutex;
-
-
 	pthread_mutex_t			*fork_mutex;
 	pthread_mutex_t			*monitor_mutex;
 	pthread_mutex_t			*waiter_mutex;
 	pthread_mutex_t			*now_time_mutex;
 	pthread_mutex_t			*die_mutex;
-
 	pthread_mutex_t			*philo_mutex;
 	pthread_mutex_t			*last_eat_mutex;
 	pthread_mutex_t			*starving_time_mutex;
 	pthread_mutex_t			*state_mutex;
-
 
 struct						s_philo
 {
@@ -123,6 +113,7 @@ struct						s_philo
 	long long				starving_time;
 	long long				eat_count;
 	bool					philo_must_eat;
+	int						eat_flag;
 	t_common_mutex			*c_mutex;
 };
 
@@ -131,6 +122,7 @@ struct						s_common_mutex
 	pthread_mutex_t			*last_eat_mutex;
 	pthread_mutex_t			*starving_time_mutex;
 	pthread_mutex_t			*state_mutex;
+	pthread_mutex_t			*eat_flag_mutex;
 };
 
 /* ************************** */
@@ -163,5 +155,5 @@ void						do_action(t_state_type state, long long index,
 void						set_die(t_philo *philo);
 void						set_must_eat(t_philo *philo);
 bool						is_finish(t_philo *philo);
-bool						waiter_judge(t_philo *philo);
+void						waiter_judge(t_philo *philo);
 #endif

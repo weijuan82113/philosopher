@@ -6,11 +6,13 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 15:24:48 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 17:56:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+aa
 
 static bool	is_wait_time(t_state_type state, long long start_time,
 		long long wait_time)

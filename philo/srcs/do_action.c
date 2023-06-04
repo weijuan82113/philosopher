@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/18 22:45:45 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 14:38:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static bool	is_wait_time(t_state_type state, long long start_time,
 		long long wait_time)
 {
 	if (state == e_sleep)
-		return (get_time() - start_time >= wait_time);
+		return (get_time() - start_time > wait_time);
 	return (get_time() - start_time > wait_time);
 }
 
@@ -25,7 +25,7 @@ static void	do_wait(t_state_type state, long long start_time,
 {
 	while (true)
 	{
-		usleep(200);
+		usleep(300);
 		if (is_wait_time(state, start_time, wait_time))
 			break ;
 	}
@@ -37,10 +37,15 @@ static void	do_eat(long long index, t_philo *philo)
 
 	p_info = philo->p_info;
 	set_last_eat_time(philo);
+	//set_starving_time(philo);
 	philo->eat_count++;
 	if (philo->eat_count == philo->p_info->m_eat
 		&& judge_must_eat(philo) == true)
+	{
+		pthread_mutex_lock(philo->c_mutex->must_eat_mutex);
 		philo->philo_must_eat = true;
+		pthread_mutex_unlock(philo->c_mutex->must_eat_mutex);
+	}
 	do_wait(philo->state, get_time(), p_info->t_eat);
 	pthread_mutex_unlock(&p_info->fork_mutex[index]);
 	pthread_mutex_unlock(&p_info->fork_mutex[(index + 1) % p_info->p_num]);

@@ -6,13 +6,13 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 18:29:48 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/18 22:55:16 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 11:49:04 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static bool	is_starving_time_longest(t_philo *philo, int index, t_philo *waiter)
+static bool	is_starving_time_longest(t_philo *philo, const int index, t_philo *waiter)
 {
 	long long	right;
 	long long	left;
@@ -20,12 +20,13 @@ static bool	is_starving_time_longest(t_philo *philo, int index, t_philo *waiter)
 	long long	starving_time;
 	long long	l_starving_time;
 
-
 	right = (index + 1) % philo->p_info->p_num;
 	if (index - 1 < 0)
 		left = index - 1 + philo->p_info->p_num;
 	else
 		left = index - 1;
+	//printf("index: %d\n", index);
+	//printf("right: %lld, left: %lld\n", right, left);
 	pthread_mutex_lock(waiter[right].c_mutex->starving_time_mutex);
 	r_starving_time = waiter[right].starving_time;
 	pthread_mutex_unlock(waiter[right].c_mutex->starving_time_mutex);

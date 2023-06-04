@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 00:08:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/18 22:45:49 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 09:03:41 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,14 @@ static void	*free_p_info(t_p_info *p_info)
 	}
 	pthread_mutex_destroy(p_info->monitor_mutex);
 	pthread_mutex_destroy(p_info->die_mutex);
+	pthread_mutex_destroy(p_info->is_must_eat_mutex);
 	pthread_mutex_destroy(p_info->now_time_mutex);
 	pthread_mutex_destroy(p_info->waiter_mutex);
 	free(p_info->fork_mutex);
 	free(p_info->ready_mutex);
 	free(p_info->monitor_mutex);
 	free(p_info->die_mutex);
+	free(p_info->is_must_eat_mutex);
 	free(p_info->now_time_mutex);
 	free(p_info->waiter_mutex);
 	free(p_info->t_thread);
@@ -44,10 +46,12 @@ static void free_common_mutex(t_common_mutex *c_mutex)
 	pthread_mutex_destroy(c_mutex->starving_time_mutex);
 	pthread_mutex_destroy(c_mutex->state_mutex);
 	pthread_mutex_destroy(c_mutex->eat_flag_mutex);
+	pthread_mutex_destroy(c_mutex->must_eat_mutex);
 	free(c_mutex->last_eat_mutex);
 	free(c_mutex->starving_time_mutex);
 	free(c_mutex->state_mutex);
 	free(c_mutex->eat_flag_mutex);
+	free(c_mutex->must_eat_mutex);
 }
 
 static void	free_philo_mutex(t_philo *philo, int num)

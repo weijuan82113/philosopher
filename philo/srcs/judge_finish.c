@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/18 22:46:48 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 14:54:28 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ bool	is_everyone_eat(t_philo *philo)
 	m_eat_count = 0;
 	while (i < philo->p_info->p_num)
 	{
+		pthread_mutex_lock(philo[i].c_mutex->must_eat_mutex);
 		if (philo[i].philo_must_eat == true)
 			m_eat_count++;
+		pthread_mutex_unlock(philo[i].c_mutex->must_eat_mutex);
 		i++;
 	}
 	if (m_eat_count == philo->p_info->p_num)
@@ -52,19 +54,30 @@ void	set_die(t_philo *philo)
 	pthread_mutex_unlock(philo->c_mutex->state_mutex);
 }
 
-
 bool	judge_die(t_philo *philo)
 {
 	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
+	//printf("i : %lld starving_time: %lld\n", philo->index, philo->starving_time);
+	printf("i:%lld starving time: %lld\n", philo->index, philo->starving_time);
 	if (philo->starving_time > philo->p_info->t_die)
+	{
+		pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
 		return (true);
+	}
 	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
 	return (false);
 }
 
 bool	is_finish(t_philo *philo)
 {
-	if (is_someone_die(philo) == true || philo->p_info->is_must_eat == true)
+	pthread_mutex_lock(philo->p_info->is_must_eat_mutex);
+	if (philo->p_info->is_must_eat == true)
+	{
+		pthread_mutex_unlock(philo->p_info->is_must_eat_mutex);
+		return (true);
+	}
+	pthread_mutex_unlock(philo->p_info->is_must_eat_mutex);
+	if (is_someone_die(philo) == true)
 		return (true);
 	return (false);
 }

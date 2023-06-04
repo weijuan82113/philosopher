@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/18 23:11:37 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 08:59:49 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ static bool common_mutex_init(t_common_mutex *c_mutex)
 		return (false);
 	c_mutex->state_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!c_mutex->state_mutex)
+		return (false);
+	c_mutex->must_eat_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!c_mutex->must_eat_mutex)
 		return (false);
 	c_mutex->eat_flag_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!c_mutex->eat_flag_mutex)
@@ -41,6 +44,7 @@ static void	init_philo_state(long long i, t_philo *philo, t_p_info *p_info)
 	pthread_mutex_init((philo[i]).c_mutex->starving_time_mutex, NULL);
 	pthread_mutex_init((philo[i]).c_mutex->state_mutex, NULL);
 	pthread_mutex_init((philo[i]).c_mutex->eat_flag_mutex, NULL);
+	pthread_mutex_init((philo[i]).c_mutex->must_eat_mutex, NULL);
 }
 
 static bool	init_philo_var(t_philo *philo, t_p_info *p_info, long long num)

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:59:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/05/18 22:45:57 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 09:02:44 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 	pthread_mutex_t	*now_time;
 	pthread_mutex_t	*waiter;
 	pthread_mutex_t	*die;
+	pthread_mutex_t *is_must_eat_mutex;
 	int				i;
 
 	fork = malloc(sizeof(pthread_mutex_t) * num);
@@ -70,6 +71,11 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 		return (false);
 	pthread_mutex_init(waiter, NULL);
 	p_info->waiter_mutex = waiter;
+	is_must_eat_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!is_must_eat_mutex)
+		return (false);
+	pthread_mutex_init(is_must_eat_mutex, NULL);
+	p_info->is_must_eat_mutex = is_must_eat_mutex;
 	if (set_ready_mutex(p_info) == false)
 		return (false);
 	return (true);

@@ -12,6 +12,9 @@
 		"time.h": "c",
 		"libutils.h": "c",
 		"ios": "c",
-		"philosophers.h": "c"
+		"philosophers.h": "c",
+		"stdbool.h": "c",
+		"random": "c",
+		"ratio": "c"
 	}
 }

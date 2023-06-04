@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 00:08:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 09:03:41 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 15:45:55 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	*free_p_info(t_p_info *p_info)
 	return (NULL);
 }
 
-static void free_common_mutex(t_common_mutex *c_mutex)
+static void	free_common_mutex(t_common_mutex *c_mutex)
 {
 	pthread_mutex_destroy(c_mutex->last_eat_mutex);
 	pthread_mutex_destroy(c_mutex->starving_time_mutex);

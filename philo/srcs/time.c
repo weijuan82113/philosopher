@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:57:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 14:50:55 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 16:15:30 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	set_starving_time(t_philo *philo)
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
 	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
 	philo->starving_time = philo->p_info->now_time - philo->last_eat_time;
-	//printf("i : %lld starving time is %lld\n", philo->index, philo->starving_time);
-	//printf("i:%lld starving time:%lld\n", philo->index, philo->starving_time);
 	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);

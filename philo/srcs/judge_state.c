@@ -6,51 +6,67 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 01:45:19 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 14:47:13 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 16:27:40 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
+static bool	take_from_rifht(int index, int num, pthread_mutex_t *fork,
+		t_philo *philo)
+{
+	if (is_finish(philo) == true)
+		return (false);
+	pthread_mutex_lock(&fork[index]);
+	pthread_mutex_lock(philo->p_info->now_time_mutex);
+	print_state(e_fork, index, philo->p_info->now_time);
+	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	if (index == (index + 1) % num)
+		return (false);
+	if (is_finish(philo) == true)
+	{
+		pthread_mutex_unlock(&fork[index]);
+		return (false);
+	}
+	pthread_mutex_lock(&fork[(index + 1) % num]);
+	pthread_mutex_lock(philo->p_info->now_time_mutex);
+	print_state(e_fork, index, philo->p_info->now_time);
+	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	return (true);
+}
+
+static bool	take_from_left(int index, int num, pthread_mutex_t *fork,
+		t_philo *philo)
+{
+	if (is_finish(philo) == true)
+		return (false);
+	pthread_mutex_lock(&fork[(index + 1) % num]);
+	pthread_mutex_lock(philo->p_info->now_time_mutex);
+	print_state(e_fork, index, philo->p_info->now_time);
+	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	if (is_finish(philo) == true)
+	{
+		pthread_mutex_unlock(&fork[index]);
+		return (false);
+	}
+	pthread_mutex_lock(&fork[index]);
+	pthread_mutex_lock(philo->p_info->now_time_mutex);
+	print_state(e_fork, index, philo->p_info->now_time);
+	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	return (true);
+}
+
 static bool	take_fork(int index, int num, pthread_mutex_t *fork, t_philo *philo)
 {
 	if (index % 2 == 0)
 	{
-		if (is_finish(philo) == true)
+		if (take_from_rifht(index, num, fork, philo) == false)
 			return (false);
-		pthread_mutex_lock(&fork[index]);
-		pthread_mutex_lock(philo->p_info->now_time_mutex);
-		print_state(e_fork, index, philo->p_info->now_time);
-		pthread_mutex_unlock(philo->p_info->now_time_mutex);
-		if (index == (index + 1) % num)
-			return (false);
-		if (is_finish(philo) == true)
-		{
-			pthread_mutex_unlock(&fork[index]);
-			return (false);
-		}
-		pthread_mutex_lock(&fork[(index + 1) % num]);
-		pthread_mutex_lock(philo->p_info->now_time_mutex);
-		print_state(e_fork, index, philo->p_info->now_time);
-		pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	}
 	else
 	{
-		if (is_finish(philo) == true)
+		if (take_from_left(index, num, fork, philo) == false)
 			return (false);
-		pthread_mutex_lock(&fork[(index + 1) % num]);
-		pthread_mutex_lock(philo->p_info->now_time_mutex);
-		print_state(e_fork, index, philo->p_info->now_time);
-		pthread_mutex_unlock(philo->p_info->now_time_mutex);
-		if (is_finish(philo) == true)
-		{
-			pthread_mutex_unlock(&fork[index]);
-			return (false);
-		}
-		pthread_mutex_lock(&fork[index]);
-		pthread_mutex_lock(philo->p_info->now_time_mutex);
-		print_state(e_fork, index, philo->p_info->now_time);
-		pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	}
 	return (true);
 }
@@ -68,7 +84,6 @@ t_state_type	judge_state(t_philo *philo)
 		if (take_fork(philo->index, philo->p_info->p_num,
 				philo->p_info->fork_mutex, philo) == false)
 		{
-			// printf("judge finish1\n");
 			pthread_mutex_unlock(philo->c_mutex->eat_flag_mutex);
 			return (e_finish);
 		}

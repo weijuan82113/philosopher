@@ -6,13 +6,13 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 08:59:49 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 15:48:41 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static bool common_mutex_init(t_common_mutex *c_mutex)
+static bool	common_mutex_init(t_common_mutex *c_mutex)
 {
 	c_mutex->last_eat_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!c_mutex->last_eat_mutex)
@@ -56,12 +56,12 @@ static bool	init_philo_var(t_philo *philo, t_p_info *p_info, long long num)
 	{
 		(philo[i]).p_thread = malloc(sizeof(pthread_t));
 		if (!(philo[i]).p_thread)
-			return (printf_return_int("error occuring in malloc_pthread\n",
-					false));
+			return (printf_return_int("\
+			error occuring in malloc_pthread\n", false));
 		(philo[i]).m_thread = malloc(sizeof(pthread_t));
 		if (!(philo[i]).m_thread)
-			return (printf_return_int("error occuring in malloc_pthread\n",
-					false));
+			return (printf_return_int("\
+			error occuring in malloc_pthread\n", false));
 		(philo[i]).philo_mutex = malloc(sizeof(pthread_mutex_t));
 		if (!(philo[i]).philo_mutex)
 			return (printf_return_int("error occuring in mutex init\n", false));

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:32:25 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 11:58:55 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 16:16:36 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_state(t_state_type state, long long index, long long now_time)
 {
-	long long philo_no;
+	long long	philo_no;
 
 	philo_no = index + 1;
 	if (state == e_eat)

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/20 00:06:52 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 14:46:33 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 16:10:52 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,10 @@ int	main(int argc, char **argv)
 	philo = philo_init(p_num, p_info_init(p_num, argv));
 	if (philo == NULL)
 		return (1);
-	//printf("test1\n");
 	if (create_thread(p_num, philo) == false)
 		return (printf_return_int("error occuring in pthread_create\n", 1));
-	//printf("test2\n");
 	if (join_thread(p_num, philo) == false)
 		return (printf_return_int("error occuring in pthread_join\n", 1));
-	//printf("test3\n");
 	free_all(philo);
-	//printf("test4\n");
 	return (0);
 }

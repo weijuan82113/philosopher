@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 14:19:13 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 16:26:51 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,4 +141,5 @@ void							set_die(t_philo *philo);
 void							set_must_eat(t_philo *philo);
 bool							is_finish(t_philo *philo);
 void							waiter_judge(t_philo *philo);
+bool							init_info_var(t_p_info *p_info, char **argv);
 #endif

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 14:54:28 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 15:25:15 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,6 @@ void	set_die(t_philo *philo)
 bool	judge_die(t_philo *philo)
 {
 	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
-	//printf("i : %lld starving_time: %lld\n", philo->index, philo->starving_time);
-	printf("i:%lld starving time: %lld\n", philo->index, philo->starving_time);
 	if (philo->starving_time > philo->p_info->t_die)
 	{
 		pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);

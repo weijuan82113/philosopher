@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 14:38:48 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/04 15:24:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ static void	do_eat(long long index, t_philo *philo)
 
 	p_info = philo->p_info;
 	set_last_eat_time(philo);
-	//set_starving_time(philo);
 	philo->eat_count++;
 	if (philo->eat_count == philo->p_info->m_eat
 		&& judge_must_eat(philo) == true)

@@ -14,9 +14,12 @@
 
 static void	print_do_action(t_philo *philo)
 {
+	long long	now_time;
+
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
-	print_state(philo->state, philo->index, philo->p_info->now_time);
+	now_time = philo->p_info->now_time;
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	print_state(philo->state, philo->index, now_time);
 	do_action(philo->state, philo->index, philo);
 }
 
@@ -45,6 +48,9 @@ void	*thread_philo_func(void *arg)
 	usleep(30 * philo->p_info->p_num);
 	pthread_mutex_lock(philo->philo_mutex);
 	pthread_mutex_unlock(philo->philo_mutex);
+	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
+	philo->last_eat_time = 0;
+	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
 	while (true)
 	{
 		if (is_finish(philo) == true)

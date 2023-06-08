@@ -46,15 +46,16 @@ void	*thread_monitor_func(void *arg)
 	if (set_ready(philo) == false)
 		return (printf_return("error occuring in set_ready\n", NULL));
 	pthread_mutex_unlock(philo->philo_mutex);
-	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
-	philo->last_eat_time = 0;
-	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
-	while (true)
-	{
-		if (is_finish(philo) == true)
-			return (NULL);
-		waiter_judge(philo);
-		if (is_finish(philo) == true)
-			return (NULL);
-	}
+	// pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
+	// philo->last_eat_time = 0;
+	// pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
+	// while (true)
+	// {
+	// 	if (is_finish(philo) == true)
+	// 		return (NULL);
+	// 	waiter_judge(philo);
+	// 	if (is_finish(philo) == true)
+	// 		return (NULL);
+	// }
+	return (NULL);
 }

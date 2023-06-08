@@ -59,6 +59,7 @@ bool	set_now_time(t_philo *philo)
 		return (false);
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
 	philo->p_info->now_time = now_time_stamp - philo->p_info->start_time_stamp;
+	printf("now time: %lld\n", philo->p_info->now_time);
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	return (true);
 }

@@ -14,7 +14,7 @@ NAME = philo
 
 # COMPILE FLAGS
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g -fsanitize=undefined -fsanitize=thread
+CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g
 SRC_DIR	= ./srcs
 SRC		= main.c \
 		  init_philo.c \

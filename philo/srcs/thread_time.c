@@ -33,13 +33,16 @@ void	*thread_time_func(void *arg)
 	philo->p_info->start_time_stamp = get_time();
 	while (true)
 	{
-		usleep(700);
+		usleep(100);
 		i = 0;
 		while (i < philo->p_info->p_num)
 		{
+			if (set_now_time(philo) == false)
+				return (printf_return("error occuring in set_now_time\n", NULL));
 			if (is_finish(philo) == true)
 				return (NULL);
 			set_print_die(i, philo);
+			waiter_judge(&philo[i]);
 			i ++;
 		}
 		if (is_everyone_eat(philo) == true && judge_must_eat(philo) == true)

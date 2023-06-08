@@ -25,7 +25,7 @@ static void	do_wait(t_state_type state, long long start_time,
 {
 	while (true)
 	{
-		usleep(300);
+		usleep(100);
 		if (is_wait_time(state, start_time, wait_time))
 			break ;
 	}

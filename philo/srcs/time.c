@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:57:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 16:15:30 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/08 20:31:13 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,21 +23,30 @@ long long	get_time(void)
 
 void	set_last_eat_time(t_philo *philo)
 {
-	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
+	long long now_time;
+
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
-	philo->last_eat_time = philo->p_info->now_time;
+	now_time = philo->p_info->now_time;
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
+	philo->last_eat_time = now_time;
 	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
 }
 
 void	set_starving_time(t_philo *philo)
 {
-	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
+
+	long long now_time;
+	long long last_eat_time;
+
 	pthread_mutex_lock(philo->p_info->now_time_mutex);
-	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
-	philo->starving_time = philo->p_info->now_time - philo->last_eat_time;
-	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
+	now_time = philo->p_info->now_time;
 	pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
+	last_eat_time = philo->last_eat_time;
+	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
+	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
+	philo->starving_time = now_time - last_eat_time;
 	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
 }
 

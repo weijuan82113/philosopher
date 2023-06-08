@@ -6,13 +6,13 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 01:45:19 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 16:27:40 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/08 20:35:07 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static bool	take_from_rifht(int index, int num, pthread_mutex_t *fork,
+static bool	take_from_left(int index, int num, pthread_mutex_t *fork,
 		t_philo *philo)
 {
 	if (is_finish(philo) == true)
@@ -35,7 +35,7 @@ static bool	take_from_rifht(int index, int num, pthread_mutex_t *fork,
 	return (true);
 }
 
-static bool	take_from_left(int index, int num, pthread_mutex_t *fork,
+static bool	take_from_right(int index, int num, pthread_mutex_t *fork,
 		t_philo *philo)
 {
 	if (is_finish(philo) == true)
@@ -60,7 +60,7 @@ static bool	take_fork(int index, int num, pthread_mutex_t *fork, t_philo *philo)
 {
 	if (index % 2 == 0)
 	{
-		if (take_from_rifht(index, num, fork, philo) == false)
+		if (take_from_right(index, num, fork, philo) == false)
 			return (false);
 	}
 	else

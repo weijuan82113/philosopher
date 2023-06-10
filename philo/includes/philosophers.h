@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 16:26:51 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 11:12:13 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ struct							s_p_info
 {
 	pthread_mutex_t				*fork_mutex;
 	pthread_mutex_t				*monitor_mutex;
-	pthread_mutex_t				*ready_mutex;
 	pthread_t					*t_thread;
 	long long					p_num;
 	long long					t_die;
@@ -78,8 +77,8 @@ struct							s_p_info
 	pthread_mutex_t				*die_mutex;
 	bool						is_must_eat;
 	pthread_mutex_t				*is_must_eat_mutex;
-	long long					now_time;
-	pthread_mutex_t				*now_time_mutex;
+	//long long					now_time;
+	//pthread_mutex_t				*now_time_mutex;
 	long long					start_time_stamp;
 	t_philo						*waiter;
 	pthread_mutex_t				*waiter_mutex;
@@ -92,6 +91,7 @@ struct							s_philo
 	pthread_t					*m_thread;
 	t_p_info					*p_info;
 	pthread_mutex_t				*philo_mutex;
+	// pthread_mutex_t				*ready_mutex;
 	long long					last_eat_time;
 	t_state_type				state;
 	long long					starving_time;
@@ -117,15 +117,15 @@ struct							s_common_mutex
 t_p_info						*p_info_init(long long num, char **argv);
 t_philo							*philo_init(long long num, t_p_info *p_info);
 void							*thread_philo_func(void *arg);
-void							*thread_time_func(void *arg);
+void							*thread_monitor_func(void *arg);
 bool							create_thread(long long p_num, t_philo *philo);
 bool							join_thread(long long p_num, t_philo *philo);
-void							*thread_monitor_func(void *arg);
+//void							*thread_monitor_func(void *arg);
 void							*printf_return(char *print_str, void *ret);
 int								printf_return_int(char *print_str, int ret);
 long long						get_time(void);
 void							set_starving_time(t_philo *philo);
-bool							set_now_time(t_philo *philo);
+long long						get_now_time(t_philo *philo);
 void							set_last_eat_time(t_philo *philo);
 bool							judge_die(t_philo *philo);
 void							free_all(t_philo *philo);

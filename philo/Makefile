@@ -6,7 +6,7 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/06/04 16:11:29 by wchen            ###   ########.fr        #
+#    Updated: 2023/06/10 10:24:18 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRC		= main.c \
 		  init_thread_func.c \
 		  init_p_info.c \
 		  thread_philo.c \
-		  thread_time.c \
 		  thread_monitor.c \
 		  init_p_info_var.c \
 

@@ -5,57 +5,68 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/04 15:38:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 15:38:57 by wchen            ###   ########.fr       */
+/*   Created: 2023/06/04 15:36:37 by wchen             #+#    #+#             */
+/*   Updated: 2023/06/10 11:40:24 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-static bool	set_ready(t_philo *philo)
+void	set_print_die(int i, t_philo *philo)
+{
+	set_starving_time(&philo[i]);
+	if (judge_die(&philo[i]) == true && is_someone_die(philo) == false)
+	{
+		pthread_mutex_lock(philo[i].philo_mutex);
+		set_die(&philo[i]);
+		//pthread_mutex_lock(philo->p_info->now_time_mutex);
+		print_state(e_die, philo[i].index, get_now_time(philo));
+		pthread_mutex_unlock(philo[i].philo_mutex);
+		//pthread_mutex_unlock(philo->p_info->now_time_mutex);
+	}
+}
+
+
+static void	unlock_philo(t_philo *philo)
 {
 	long long	i;
 
 	i = 0;
-	if (philo->index + 1 == philo->p_info->p_num)
-	{
-		while (i < philo->p_info->p_num - 1)
-		{
-			pthread_mutex_unlock(&philo->p_info->ready_mutex[i]);
-			i++;
-		}
-	}
-	return (true);
-}
 
-static void	wait_ready(long long index, t_p_info *p_info)
-{
-	if (index + 1 != p_info->p_num)
-		pthread_mutex_lock(&p_info->ready_mutex[index]);
-	else
-		pthread_mutex_unlock(&p_info->ready_mutex[index]);
+	while (i < philo->p_info->p_num)
+	{
+		pthread_mutex_unlock(philo[i].philo_mutex);
+		i++;
+	}
 }
 
 void	*thread_monitor_func(void *arg)
 {
 	t_philo	*philo;
+	int		i;
 
 	philo = arg;
-	pthread_mutex_lock(philo->philo_mutex);
-	wait_ready(philo->index, philo->p_info);
-	if (set_ready(philo) == false)
-		return (printf_return("error occuring in set_ready\n", NULL));
-	pthread_mutex_unlock(philo->philo_mutex);
-	// pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
-	// philo->last_eat_time = 0;
-	// pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
-	// while (true)
-	// {
-	// 	if (is_finish(philo) == true)
-	// 		return (NULL);
-	// 	waiter_judge(philo);
-	// 	if (is_finish(philo) == true)
-	// 		return (NULL);
-	// }
-	return (NULL);
+	philo->p_info->start_time_stamp = get_time();
+	unlock_philo(philo);
+	while (true)
+	{
+		usleep(100);
+		i = 0;
+		while (i < philo->p_info->p_num)
+		{
+			// if (set_now_time(philo) == false)
+			// 	return (printf_return("error occuring in set_now_time\n", NULL));
+			if (is_finish(philo) == true)
+				return (NULL);
+			waiter_judge(&philo[i]);
+			set_print_die(i, philo);
+			i ++;
+		}
+		if (is_everyone_eat(philo) == true && judge_must_eat(philo) == true)
+			set_must_eat(philo);
+		if (is_finish(philo) == true)
+			return (NULL);
+		// if (set_now_time(philo) == false)
+		// 	return (printf_return("error occuring in set_now_time\n", NULL));
+	}
 }

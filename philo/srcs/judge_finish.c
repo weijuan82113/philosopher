@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 15:25:15 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 11:33:14 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,13 @@
 
 bool	is_someone_die(t_philo *philo)
 {
+	bool	die;
+
 	pthread_mutex_lock(philo->p_info->die_mutex);
-	if (philo->p_info->die == true)
-	{
-		pthread_mutex_unlock(philo->p_info->die_mutex);
-		return (true);
-	}
+	die = philo->p_info->die;
 	pthread_mutex_unlock(philo->p_info->die_mutex);
+	if (die == true)
+		return (true);
 	return (false);
 }
 
@@ -56,25 +56,25 @@ void	set_die(t_philo *philo)
 
 bool	judge_die(t_philo *philo)
 {
+	long long starving_time;
+
 	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
-	if (philo->starving_time > philo->p_info->t_die)
-	{
-		pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
-		return (true);
-	}
+	starving_time = philo->starving_time;
 	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
+	if (starving_time > philo->p_info->t_die)
+		return (true);
 	return (false);
 }
 
 bool	is_finish(t_philo *philo)
 {
+	bool	is_must_eat;
+
 	pthread_mutex_lock(philo->p_info->is_must_eat_mutex);
-	if (philo->p_info->is_must_eat == true)
-	{
-		pthread_mutex_unlock(philo->p_info->is_must_eat_mutex);
-		return (true);
-	}
+	is_must_eat = philo->p_info->is_must_eat;
 	pthread_mutex_unlock(philo->p_info->is_must_eat_mutex);
+	if (is_must_eat == true)
+		return (true);
 	if (is_someone_die(philo) == true)
 		return (true);
 	return (false);

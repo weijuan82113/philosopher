@@ -6,30 +6,11 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:59:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/04 16:06:51 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 10:38:27 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
-
-static bool	set_ready_mutex(t_p_info *p_info)
-{
-	long long		i;
-	pthread_mutex_t	*ready_mutex;
-
-	ready_mutex = malloc(sizeof(pthread_mutex_t) * p_info->p_num);
-	if (!ready_mutex)
-		return (false);
-	i = 0;
-	while (i < p_info->p_num)
-	{
-		pthread_mutex_init(&ready_mutex[i], NULL);
-		pthread_mutex_lock(&ready_mutex[i]);
-		i++;
-	}
-	p_info->ready_mutex = ready_mutex;
-	return (true);
-}
 
 static bool	p_info_mutex_init(t_p_info *p_info)
 {
@@ -39,9 +20,9 @@ static bool	p_info_mutex_init(t_p_info *p_info)
 	p_info->die_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!p_info->die_mutex)
 		return (false);
-	p_info->now_time_mutex = malloc(sizeof(pthread_mutex_t));
-	if (!p_info->now_time_mutex)
-		return (false);
+	// p_info->now_time_mutex = malloc(sizeof(pthread_mutex_t));
+	// if (!p_info->now_time_mutex)
+	// 	return (false);
 	p_info->waiter_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!p_info->waiter_mutex)
 		return (false);
@@ -68,11 +49,11 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 		return (false);
 	pthread_mutex_init(p_info->monitor_mutex, NULL);
 	pthread_mutex_init(p_info->die_mutex, NULL);
-	pthread_mutex_init(p_info->now_time_mutex, NULL);
+	// pthread_mutex_init(p_info->now_time_mutex, NULL);
 	pthread_mutex_init(p_info->waiter_mutex, NULL);
 	pthread_mutex_init(p_info->is_must_eat_mutex, NULL);
-	if (set_ready_mutex(p_info) == false)
-		return (false);
+	// if (set_ready_mutex(p_info) == false)
+	// 	return (false);
 	return (true);
 }
 

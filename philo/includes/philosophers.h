@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 11:12:13 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 12:06:51 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ enum							e_fork_type
 struct							s_p_info
 {
 	pthread_mutex_t				*fork_mutex;
-	pthread_mutex_t				*monitor_mutex;
+	pthread_mutex_t				*judge_mutex;
 	pthread_t					*t_thread;
 	long long					p_num;
 	long long					t_die;
@@ -127,7 +127,7 @@ long long						get_time(void);
 void							set_starving_time(t_philo *philo);
 long long						get_now_time(t_philo *philo);
 void							set_last_eat_time(t_philo *philo);
-bool							judge_die(t_philo *philo);
+long long						judge_die_time(t_philo *philo);
 void							free_all(t_philo *philo);
 bool							is_someone_die(t_philo *philo);
 t_state_type					judge_state(t_philo *philo);

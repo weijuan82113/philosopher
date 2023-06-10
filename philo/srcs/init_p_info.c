@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:59:30 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 10:38:27 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 11:57:09 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static bool	p_info_mutex_init(t_p_info *p_info)
 {
-	p_info->monitor_mutex = malloc(sizeof(pthread_mutex_t));
-	if (!p_info->monitor_mutex)
+	p_info->judge_mutex = malloc(sizeof(pthread_mutex_t));
+	if (!p_info->judge_mutex)
 		return (false);
 	p_info->die_mutex = malloc(sizeof(pthread_mutex_t));
 	if (!p_info->die_mutex)
@@ -47,7 +47,7 @@ static bool	init_mutex(long long num, t_p_info *p_info)
 	}
 	if (p_info_mutex_init(p_info) == false)
 		return (false);
-	pthread_mutex_init(p_info->monitor_mutex, NULL);
+	pthread_mutex_init(p_info->judge_mutex, NULL);
 	pthread_mutex_init(p_info->die_mutex, NULL);
 	// pthread_mutex_init(p_info->now_time_mutex, NULL);
 	pthread_mutex_init(p_info->waiter_mutex, NULL);

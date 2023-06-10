@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:36:37 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 11:40:24 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 12:09:14 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 void	set_print_die(int i, t_philo *philo)
 {
+	long long	die_time;
+
 	set_starving_time(&philo[i]);
-	if (judge_die(&philo[i]) == true && is_someone_die(philo) == false)
+	pthread_mutex_lock(philo->p_info->judge_mutex);
+	die_time = judge_die_time(&philo[i]);
+	if (die_time != 0 && is_someone_die(philo) == false)
 	{
-		pthread_mutex_lock(philo[i].philo_mutex);
 		set_die(&philo[i]);
 		//pthread_mutex_lock(philo->p_info->now_time_mutex);
-		print_state(e_die, philo[i].index, get_now_time(philo));
-		pthread_mutex_unlock(philo[i].philo_mutex);
+		print_state(e_die, philo[i].index, die_time);
 		//pthread_mutex_unlock(philo->p_info->now_time_mutex);
 	}
+	pthread_mutex_unlock(philo->p_info->judge_mutex);
 }
 
 

@@ -6,7 +6,7 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/06/10 10:24:18 by wchen            ###   ########.fr        #
+#    Updated: 2023/06/10 15:56:13 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo
 
 # COMPILE FLAGS
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g
+CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g -fsanitize=integer -fsanitize=thread
 SRC_DIR	= ./srcs
 SRC		= main.c \
 		  init_philo.c \

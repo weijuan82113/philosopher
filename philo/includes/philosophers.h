@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 12:06:51 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 17:34:26 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ struct							s_p_info
 	//long long					now_time;
 	//pthread_mutex_t				*now_time_mutex;
 	long long					start_time_stamp;
+	pthread_mutex_t				*start_time_mutex;
 	t_philo						*waiter;
 	pthread_mutex_t				*waiter_mutex;
 };

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 01:45:19 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 15:31:22 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 17:59:10 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,21 @@ static bool	take_from_left(int index, int num, pthread_mutex_t *fork,
 		t_philo *philo)
 {
 	pthread_mutex_lock(&fork[index]);
-	//pthread_mutex_lock(philo->p_info->judge_mutex);
 	if (is_finish(philo) == true)
 	{
-		//pthread_mutex_unlock(philo->p_info->judge_mutex);
 		pthread_mutex_unlock(&fork[index]);
 		return (false);
 	}
 	print_state(e_fork, index, get_now_time(philo));
-	//pthread_mutex_unlock(philo->p_info->judge_mutex);
 	if (index == (index + 1) % num)
 		return (false);
 	pthread_mutex_lock(&fork[(index + 1) % num]);
-	//pthread_mutex_lock(philo->p_info->judge_mutex);
 	if (is_finish(philo) == true)
 	{
-		//pthread_mutex_unlock(philo->p_info->judge_mutex);
 		pthread_mutex_unlock(&fork[index + 1]);
 		return (false);
 	}
 	print_state(e_fork, index, get_now_time(philo));
-	//pthread_mutex_unlock(philo->p_info->judge_mutex);
 	return (true);
 }
 
@@ -44,31 +38,25 @@ static bool	take_from_right(int index, int num, pthread_mutex_t *fork,
 		t_philo *philo)
 {
 	pthread_mutex_lock(&fork[(index + 1) % num]);
-	//pthread_mutex_lock(philo->p_info->judge_mutex);
 	if (is_finish(philo) == true)
 	{
-		//pthread_mutex_unlock(philo->p_info->judge_mutex);
 		pthread_mutex_unlock(&fork[(index + 1) % num]);
 		return (false);
 	}
 	print_state(e_fork, index, get_now_time(philo));
-	//pthread_mutex_unlock(philo->p_info->judge_mutex);
 	pthread_mutex_lock(&fork[index]);
-	//pthread_mutex_lock(philo->p_info->judge_mutex);
 	if (is_finish(philo) == true)
 	{
-		//pthread_mutex_unlock(philo->p_info->judge_mutex);
 		pthread_mutex_unlock(&fork[index]);
 		return (false);
 	}
 	print_state(e_fork, index, get_now_time(philo));
-	//pthread_mutex_unlock(philo->p_info->judge_mutex);
 	return (true);
 }
 
 static bool	take_fork(int index, int num, pthread_mutex_t *fork, t_philo *philo)
 {
-	if (index % 2 == 0)
+	if (index % 2 == 1)
 	{
 		if (take_from_right(index, num, fork, philo) == false)
 			return (false);

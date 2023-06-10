@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 10:17:10 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:01:58 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,18 +48,6 @@ static void	init_philo_state(long long i, t_philo *philo, t_p_info *p_info)
 	pthread_mutex_init((philo[i]).c_mutex->must_eat_mutex, NULL);
 }
 
-// static void	set_ready_mutex(t_philo *philo)
-// {
-// 	long long		i;
-
-// 	i = 0;
-// 	while (i < philo->p_info->p_num)
-// 	{
-// 		pthread_mutex_lock((philo[i]).ready_mutex);
-// 		i++;
-// 	}
-// }
-
 static void	lock_philo_mutex(t_philo *philo)
 {
 	long long		i;
@@ -90,9 +78,6 @@ static bool	init_philo_var(t_philo *philo, t_p_info *p_info, long long num)
 		(philo[i]).philo_mutex = malloc(sizeof(pthread_mutex_t));
 		if (!(philo[i]).philo_mutex)
 			return (printf_return_int("error occuring in mutex init\n", false));
-		// (philo[i]).ready_mutex = malloc(sizeof(pthread_mutex_t));
-		// if (!(philo[i]).ready_mutex)
-		// 	return (printf_return_int("error occuring in mutex init\n", false));
 		(philo[i]).c_mutex = malloc(sizeof(t_common_mutex));
 		philo[i].eat_flag = 0;
 		if (!(philo[i].c_mutex) || !common_mutex_init(philo[i].c_mutex))
@@ -101,7 +86,6 @@ static bool	init_philo_var(t_philo *philo, t_p_info *p_info, long long num)
 		i++;
 	}
 	lock_philo_mutex(philo);
-	//set_ready_mutex(philo);
 	philo->p_info->waiter = philo;
 	return (true);
 }

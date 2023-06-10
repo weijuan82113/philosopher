@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:36:37 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 18:00:00 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:25:11 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	unlock_philo(t_philo *philo)
 	long long	i;
 
 	i = 0;
-
 	while (i < philo->p_info->p_num)
 	{
 		pthread_mutex_unlock(philo[i].philo_mutex);

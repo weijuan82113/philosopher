@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 23:05:08 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 18:01:58 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:25:27 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static bool	common_mutex_init(t_common_mutex *c_mutex)
 static void	init_philo_state(long long i, t_philo *philo, t_p_info *p_info)
 {
 	pthread_mutex_init((philo[i]).philo_mutex, NULL);
-	//pthread_mutex_init((philo[i]).ready_mutex, NULL);
 	philo[i].index = i;
 	philo[i].p_info = p_info;
 	philo[i].state = e_init;

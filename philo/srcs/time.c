@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 22:57:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 18:00:44 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:25:41 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	set_last_eat_time(t_philo *philo)
 
 void	set_starving_time(t_philo *philo)
 {
-	long long last_eat_time;
+	long long	last_eat_time;
 
 	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
 	last_eat_time = philo->last_eat_time;

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 18:01:23 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:24:56 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	set_die(t_philo *philo)
 
 long long	judge_die_time(t_philo *philo)
 {
-	long long starving_time;
+	long long	starving_time;
 
 	pthread_mutex_lock(philo->c_mutex->starving_time_mutex);
 	starving_time = philo->starving_time;

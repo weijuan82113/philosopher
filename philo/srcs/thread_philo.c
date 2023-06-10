@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:02:40 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 18:00:35 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:25:58 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static bool	mutex_judge_state(t_philo *philo)
 {
 	pthread_mutex_lock(philo->c_mutex->state_mutex);
 	philo->state = judge_state(philo);
-	if (philo->state  == e_finish)
+	if (philo->state == e_finish)
 	{
 		pthread_mutex_unlock(philo->c_mutex->state_mutex);
 		return (false);

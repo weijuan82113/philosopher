@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 17:34:26 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/10 18:24:28 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ struct							s_p_info
 	pthread_mutex_t				*die_mutex;
 	bool						is_must_eat;
 	pthread_mutex_t				*is_must_eat_mutex;
-	//long long					now_time;
-	//pthread_mutex_t				*now_time_mutex;
 	long long					start_time_stamp;
 	pthread_mutex_t				*start_time_mutex;
 	t_philo						*waiter;
@@ -92,7 +90,6 @@ struct							s_philo
 	pthread_t					*m_thread;
 	t_p_info					*p_info;
 	pthread_mutex_t				*philo_mutex;
-	// pthread_mutex_t				*ready_mutex;
 	long long					last_eat_time;
 	t_state_type				state;
 	long long					starving_time;
@@ -121,7 +118,6 @@ void							*thread_philo_func(void *arg);
 void							*thread_monitor_func(void *arg);
 bool							create_thread(long long p_num, t_philo *philo);
 bool							join_thread(long long p_num, t_philo *philo);
-//void							*thread_monitor_func(void *arg);
 void							*printf_return(char *print_str, void *ret);
 int								printf_return_int(char *print_str, int ret);
 long long						get_time(void);

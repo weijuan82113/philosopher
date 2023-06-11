@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:02:40 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 12:14:38 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/11 12:47:23 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,8 @@ void	*thread_philo_func(void *arg)
 	{
 		if (mutex_judge_state(philo) == false)
 			return (NULL);
-		//pthread_mutex_lock(philo->p_info->judge_mutex);
 		if (is_finish(philo) == true)
-		{
-			//pthread_mutex_unlock(philo->p_info->judge_mutex);
 			return (NULL);
-		}
-		//pthread_mutex_unlock(philo->p_info->judge_mutex);
 		pthread_mutex_lock(philo->c_mutex->state_mutex);
 		state = philo->state;
 		pthread_mutex_unlock(philo->c_mutex->state_mutex);

@@ -6,15 +6,17 @@
 #    By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/19 23:32:07 by wchen             #+#    #+#              #
-#    Updated: 2023/06/11 10:53:59 by wchen            ###   ########.fr        #
+#    Updated: 2023/06/11 12:46:19 by wchen            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
+SANINAME = fsani_philo
 
 # COMPILE FLAGS
 CC		= cc
-CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g -fsanitize=integer -fsanitize=thread
+CFLAGS	= -Wall -Wextra -Werror -MMD -MP -g
+SANIFLAGS	= -Wall -Wextra -Werror -MMD -MP -g -fsanitize=integer -fsanitize=thread
 SRC_DIR	= ./srcs
 SRC		= main.c \
 		  init_philo.c \
@@ -63,9 +65,16 @@ $(NAME) : $(OBJS)
 	@make -C $(LIBUTILS_DIR)
 	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(OBJS) -o $@
 
+sani	: $(SANINAME)
+
+$(SANINAME) : $(OBJS)
+	@make -C $(LIBUTILS_DIR)
+	$(CC) $(SANIFLAGS) $(IFLAGS) $(LFLAGS) $(OBJS) -o $@
+
 $(OBJ_DIR)/%.o :%.c
 	@mkdir -p $$(dirname $@)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
+
 
 clean 	:
 	@make fclean -C $(LIBUTILS_DIR)
@@ -73,9 +82,12 @@ clean 	:
 
 fclean	: clean
 	rm -rf $(NAME)
+	rm -rf $(SANINAME)
 	@make fclean -C $(LIBUTILS_DIR)
 
 re		: fclean all
+
+sani	:
 
 .PHONY	: all clean fclean re $(DEPS)
 

@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 12:02:48 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/11 12:49:10 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ enum							e_fork_type
 struct							s_p_info
 {
 	pthread_mutex_t				*fork_mutex;
-	pthread_mutex_t				*judge_mutex;
 	pthread_t					*t_thread;
 	long long					p_num;
 	long long					t_die;

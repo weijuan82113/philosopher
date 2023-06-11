@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:36:37 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 18:25:11 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/11 08:44:02 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	*thread_monitor_func(void *arg)
 	unlock_philo(philo);
 	while (true)
 	{
-		usleep(100);
+		usleep(200);
 		i = 0;
 		while (i < philo->p_info->p_num)
 		{

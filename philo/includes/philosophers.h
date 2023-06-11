@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 09:03:37 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/11 12:02:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void							set_last_eat_time(t_philo *philo);
 long long						judge_die_time(t_philo *philo);
 void							free_all(t_philo *philo);
 bool							is_someone_die(t_philo *philo);
-t_state_type					judge_state(t_philo *philo);
+t_state_type					judge_state(t_philo *philo, t_state_type state);
 bool							judge_must_eat(t_philo *philo);
 bool							is_everyone_eat(t_philo *philo);
 void							print_state(t_state_type state, long long index,

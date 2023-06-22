@@ -51,8 +51,6 @@ void	*thread_philo_func(void *arg)
 	{
 		if (mutex_judge_state(philo) == false)
 			return (NULL);
-		if (is_finish(philo) == true)
-			return (NULL);
 		pthread_mutex_lock(philo->c_mutex->state_mutex);
 		state = philo->state;
 		pthread_mutex_unlock(philo->c_mutex->state_mutex);

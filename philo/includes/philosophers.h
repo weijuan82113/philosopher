@@ -41,7 +41,6 @@ typedef struct s_common_mutex	t_common_mutex;
 
 /* enum */
 typedef enum e_state_type		t_state_type;
-typedef enum e_fork_type		t_fork_type;
 
 enum							e_state_type
 {
@@ -52,12 +51,6 @@ enum							e_state_type
 	e_die,
 	e_fork,
 	e_finish,
-};
-
-enum							e_fork_type
-{
-	e_dirty,
-	e_clean,
 };
 
 /* ************************** */

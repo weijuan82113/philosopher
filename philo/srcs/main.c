@@ -22,8 +22,8 @@ int	main(int argc, char **argv)
 	t_philo		*philo;
 	long long	p_num;
 
-	if (argc < 2)
-		return (printf_return_int("wrong variable\n", 1));
+	if (argc < 5)
+		return (printf_return_int("wrong number of variables\n", 1));
 	p_num = ft_atoll(argv[1]);
 	if (p_num <= 0)
 		return (printf_return_int("wrong variable\n", 1));

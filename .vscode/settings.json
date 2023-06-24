@@ -1,8 +1,0 @@
-{
-	"files.associations": {
-		"locale": "c",
-		"string": "c",
-		"chrono": "c",
-		"variant": "c"
-	}
-}

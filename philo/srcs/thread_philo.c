@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:02:40 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 12:47:23 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/24 11:38:40 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_do_action(t_philo *philo)
 {
-	print_state(philo->state, philo->index, get_now_time(philo));
+	print_state(philo->state, philo, get_now_time(philo));
 	do_action(philo->state, philo->index, philo);
 }
 
@@ -47,7 +47,7 @@ void	*thread_philo_func(void *arg)
 	pthread_mutex_lock(philo->c_mutex->last_eat_mutex);
 	philo->last_eat_time = 0;
 	pthread_mutex_unlock(philo->c_mutex->last_eat_mutex);
-	while (true)
+	while (!is_finish(philo))
 	{
 		if (mutex_judge_state(philo) == false)
 			return (NULL);
@@ -57,4 +57,5 @@ void	*thread_philo_func(void *arg)
 		if (state != e_init && is_finish(philo) == false)
 			print_do_action(philo);
 	}
+	return (NULL);
 }

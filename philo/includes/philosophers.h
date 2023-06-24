@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/19 22:55:33 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 12:49:10 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/23 00:01:48 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,13 +116,13 @@ long long						get_time(void);
 void							set_starving_time(t_philo *philo);
 long long						get_now_time(t_philo *philo);
 void							set_last_eat_time(t_philo *philo);
-long long						judge_die_time(t_philo *philo);
+bool							judge_die(t_philo *philo);
 void							free_all(t_philo *philo);
 bool							is_someone_die(t_philo *philo);
 t_state_type					judge_state(t_philo *philo, t_state_type state);
 bool							judge_must_eat(t_philo *philo);
 bool							is_everyone_eat(t_philo *philo);
-void							print_state(t_state_type state, long long index,
+void							print_state(t_state_type state, t_philo *philo,
 									long long now_time);
 void							do_action(t_state_type state, long long index,
 									t_philo *philo);

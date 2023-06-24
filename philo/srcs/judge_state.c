@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 01:45:19 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 12:02:03 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/24 11:40:14 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static bool	take_from_left(int index, int num, pthread_mutex_t *fork,
 		pthread_mutex_unlock(&fork[index]);
 		return (false);
 	}
-	print_state(e_fork, index, get_now_time(philo));
+	print_state(e_fork, philo, get_now_time(philo));
 	if (index == (index + 1) % num)
 		return (false);
 	pthread_mutex_lock(&fork[(index + 1) % num]);
@@ -30,7 +30,7 @@ static bool	take_from_left(int index, int num, pthread_mutex_t *fork,
 		pthread_mutex_unlock(&fork[index + 1]);
 		return (false);
 	}
-	print_state(e_fork, index, get_now_time(philo));
+	print_state(e_fork, philo, get_now_time(philo));
 	return (true);
 }
 
@@ -43,14 +43,14 @@ static bool	take_from_right(int index, int num, pthread_mutex_t *fork,
 		pthread_mutex_unlock(&fork[(index + 1) % num]);
 		return (false);
 	}
-	print_state(e_fork, index, get_now_time(philo));
+	print_state(e_fork, philo, get_now_time(philo));
 	pthread_mutex_lock(&fork[index]);
 	if (is_finish(philo) == true)
 	{
 		pthread_mutex_unlock(&fork[index]);
 		return (false);
 	}
-	print_state(e_fork, index, get_now_time(philo));
+	print_state(e_fork, philo, get_now_time(philo));
 	return (true);
 }
 
@@ -89,7 +89,9 @@ t_state_type	judge_state(t_philo *philo, t_state_type state)
 			return (e_finish);
 		return (e_eat);
 	}
-	if (state == e_eat)
+	else if (state == e_die)
+		return (e_finish);
+	else if (state == e_eat)
 		return (e_sleep);
 	return (e_think);
 }

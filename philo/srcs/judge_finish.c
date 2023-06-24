@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/28 01:05:00 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/11 11:02:54 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/24 11:19:10 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ bool	is_someone_die(t_philo *philo)
 	pthread_mutex_lock(philo->p_info->die_mutex);
 	die = philo->p_info->die;
 	pthread_mutex_unlock(philo->p_info->die_mutex);
-	if (die == true)
-		return (true);
-	return (false);
+	return (die);
 }
 
 bool	is_everyone_eat(t_philo *philo)
@@ -46,15 +44,15 @@ bool	is_everyone_eat(t_philo *philo)
 
 void	set_die(t_philo *philo)
 {
-	pthread_mutex_lock(philo->p_info->die_mutex);
-	philo->p_info->die = true;
-	pthread_mutex_unlock(philo->p_info->die_mutex);
 	pthread_mutex_lock(philo->c_mutex->state_mutex);
 	philo->state = e_die;
 	pthread_mutex_unlock(philo->c_mutex->state_mutex);
+	pthread_mutex_lock(philo->p_info->die_mutex);
+	philo->p_info->die = true;
+	pthread_mutex_unlock(philo->p_info->die_mutex);
 }
 
-long long	judge_die_time(t_philo *philo)
+bool	judge_die(t_philo *philo)
 {
 	long long	starving_time;
 
@@ -62,8 +60,8 @@ long long	judge_die_time(t_philo *philo)
 	starving_time = philo->starving_time;
 	pthread_mutex_unlock(philo->c_mutex->starving_time_mutex);
 	if (starving_time > philo->p_info->t_die)
-		return (starving_time);
-	return (0);
+		return (true);
+	return (false);
 }
 
 bool	is_finish(t_philo *philo)

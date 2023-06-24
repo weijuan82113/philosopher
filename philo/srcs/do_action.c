@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/01 23:46:29 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/10 14:21:21 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/24 13:54:40 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ static void	do_eat(long long index, t_philo *philo)
 
 	p_info = philo->p_info;
 	set_last_eat_time(philo);
+	do_wait(get_time(), p_info->t_eat);
+	pthread_mutex_unlock(&p_info->fork_mutex[index]);
+	pthread_mutex_unlock(&p_info->fork_mutex[(index + 1) % p_info->p_num]);
 	philo->eat_count++;
 	if (philo->eat_count == philo->p_info->m_eat
 		&& judge_must_eat(philo) == true)
@@ -41,9 +44,6 @@ static void	do_eat(long long index, t_philo *philo)
 		philo->philo_must_eat = true;
 		pthread_mutex_unlock(philo->c_mutex->must_eat_mutex);
 	}
-	do_wait(get_time(), p_info->t_eat);
-	pthread_mutex_unlock(&p_info->fork_mutex[index]);
-	pthread_mutex_unlock(&p_info->fork_mutex[(index + 1) % p_info->p_num]);
 }
 
 void	do_action(t_state_type state, long long index, t_philo *philo)

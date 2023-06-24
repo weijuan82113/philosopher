@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:02:40 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/24 11:38:40 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/24 13:46:25 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*thread_philo_func(void *arg)
 		pthread_mutex_lock(philo->c_mutex->state_mutex);
 		state = philo->state;
 		pthread_mutex_unlock(philo->c_mutex->state_mutex);
-		if (state != e_init && is_finish(philo) == false)
+		if (state != e_init)
 			print_do_action(philo);
 	}
 	return (NULL);

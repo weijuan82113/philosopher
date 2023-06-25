@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/05 23:02:40 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/24 13:46:25 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/25 13:07:02 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	print_do_action(t_philo *philo)
 {
-	print_state(philo->state, philo, get_now_time(philo));
+	print_state(philo->state, philo);
 	do_action(philo->state, philo->index, philo);
 }
 

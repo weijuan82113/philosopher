@@ -6,7 +6,7 @@
 /*   By: wchen <wchen@student.42tokyo.jp>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 15:36:37 by wchen             #+#    #+#             */
-/*   Updated: 2023/06/24 09:08:29 by wchen            ###   ########.fr       */
+/*   Updated: 2023/06/25 13:06:56 by wchen            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	set_print_die(int i, t_philo *philo)
 	set_starving_time(&philo[i]);
 	die_flag = judge_die(&philo[i]);
 	if (die_flag && is_someone_die(philo) == false)
-		print_state(e_die, philo, get_now_time(philo));
+		print_state(e_die, philo);
 }
 
 static void	unlock_philo(t_philo *philo)
